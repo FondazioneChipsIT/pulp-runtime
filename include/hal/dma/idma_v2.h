@@ -266,7 +266,7 @@ static inline int pulp_cl_idma_L2ToL1_2d(unsigned int src, unsigned int dst, uns
   */
 
 static inline int pulp_idma_L1ToL1_2d(unsigned int src, unsigned int dst, unsigned short size, unsigned int src_stride, unsigned int dst_stride, unsigned int num_reps);
-static inline int pulp_idma_cl_L1ToL1_2d(unsigned int src, unsigned int dst, unsigned short size, unsigned int src_stride, unsigned int dst_stride, unsigned int num_reps);
+static inline int pulp_cl_idma_L1ToL1_2d(unsigned int src, unsigned int dst, unsigned short size, unsigned int src_stride, unsigned int dst_stride, unsigned int num_reps);
 
 
 
@@ -341,6 +341,7 @@ static inline int pulp_cl_idma_zeromem(unsigned int dst, unsigned short size, id
 
 /** DMA barrier.
  * This blocks the core until no transfer is on-going in the DMA.
+ * Careful: these only wait for transfers towards L2
  */
 static inline void plp_dma_barrier();
 static inline void plp_cl_dma_barrier();
@@ -900,6 +901,7 @@ static inline int pulp_idma_L2ToL1_2d(unsigned int src, unsigned int dst, unsign
   dma_tx_id = DMA_READ(IDMA_REG32_3D_NEXT_ID_1_REG_OFFSET);
   return dma_tx_id;
 }
+
 static inline int pulp_cl_idma_L2ToL1_2d(unsigned int src, unsigned int dst, unsigned short size, unsigned int src_stride, unsigned int dst_stride, unsigned int num_reps) {
   unsigned int dma_tx_id;
   unsigned int cfg = IDMA_DEFAULT_CONFIG_L2TOL1_2D;
@@ -916,7 +918,10 @@ static inline int pulp_cl_idma_L2ToL1_2d(unsigned int src, unsigned int dst, uns
   return dma_tx_id;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 004a4d4 ([iDMA] Updates on iDMA drivers)
 static inline int pulp_idma_L1ToL1_2d(unsigned int src, unsigned int dst, unsigned short size, unsigned int src_stride, unsigned int dst_stride, unsigned int num_reps) {
   unsigned int dma_tx_id;
   unsigned int cfg = IDMA_DEFAULT_CONFIG_L1TOL1_2D;
@@ -932,6 +937,7 @@ static inline int pulp_idma_L1ToL1_2d(unsigned int src, unsigned int dst, unsign
   dma_tx_id = DMA_READ(IDMA_REG32_3D_NEXT_ID_1_REG_OFFSET);
   return dma_tx_id;
 }
+
 static inline int pulp_cl_idma_L1ToL1_2d(unsigned int src, unsigned int dst, unsigned short size, unsigned int src_stride, unsigned int dst_stride, unsigned int num_reps) {
   unsigned int dma_tx_id;
   unsigned int cfg = IDMA_DEFAULT_CONFIG_L1TOL1_2D;
@@ -1076,6 +1082,7 @@ static inline int pulp_idma_zeromem(unsigned int dst, unsigned short size, idma_
   asm volatile("" : : : "memory");
   return dma_tx_id;
 }
+
 static inline int pulp_cl_idma_zeromem(unsigned int dst, unsigned short size, idma_prot_t dst_prot) {
   unsigned int dma_tx_id;
   unsigned int cfg = IDMA_DEFAULT_CONFIG;
