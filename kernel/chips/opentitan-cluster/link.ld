@@ -3,9 +3,8 @@ OUTPUT_ARCH(riscv)
 ENTRY( _start )
 MEMORY
 {
-  L2           : ORIGIN = 0xA0000000, LENGTH = 0x0007fffc
-  L1           : ORIGIN = 0xB0000000, LENGTH = 0x0003fffc
-  /*L1 last word is reserved for startup synch loop*/
+  L2           : ORIGIN = 0x1c000000, LENGTH = 0x0007fffc
+  L1           : ORIGIN = 0xB0000000, LENGTH = 0x0000fffc
 }
 
 /*
