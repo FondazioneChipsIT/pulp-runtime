@@ -62,6 +62,12 @@ PULP_CFLAGS += -DARCHI_HMR
 PULP_SRCS += kernel/hmr_synch.c
 endif
 
+# ECC
+ifdef NO_ECC
+PULP_CFLAGS += -DNO_ECC
+endif
+
+
 include $(PULPRT_HOME)/rules/pulpos/configs/default.mk
 
 ifeq '$(platform)' 'fpga'

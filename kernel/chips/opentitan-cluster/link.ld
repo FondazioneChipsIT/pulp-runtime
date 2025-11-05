@@ -3,12 +3,12 @@ OUTPUT_ARCH(riscv)
 ENTRY( _start )
 MEMORY
 {
-  L2           : ORIGIN = 0x1c000000, LENGTH = 0x0007fffc
-  L1           : ORIGIN = 0x10000000, LENGTH = 0x0000fffc
+  L2           : ORIGIN = 0xA0000000, LENGTH = 0x0007fffc
+  L1           : ORIGIN = 0xB0000000, LENGTH = 0x0000fffc
 }
 
 /*
- * This linker script try to put FC data in L2 private bank0 and FC code 
+ * This linker script try to put FC data in L2 private bank0 and FC code
  * in L2 private bank1 to avoid contention between FC code and data
  * as FC has no instruction cache and is so often accessing L2 to
  * get instructions. Everything can be shifted in case one bank is full.
@@ -178,7 +178,7 @@ SECTIONS
    * Contains FC code
    */
 
-  .vectors MAX(0x1c008000,ALIGN(256)) :
+  .vectors MAX(0xA0008000,ALIGN(256)) :
   {
     __irq_vector_base = .;
     KEEP(*(.vectors))
@@ -206,7 +206,7 @@ SECTIONS
    * Contains other data such as peripheral data and cluster code and data
    */
 
-  .l2_data MAX(0x1c010000,ALIGN(4)) :
+  .l2_data MAX(0xA0010000,ALIGN(4)) :
   {
     . = ALIGN(4);
     __cluster_text_start = .;

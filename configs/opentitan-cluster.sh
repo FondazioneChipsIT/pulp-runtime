@@ -1,5 +1,7 @@
 export PULPRT_TARGET=opentitan-cluster
 export PULPRUN_TARGET=opentitan-cluster
+export CONFIG_NO_FC=1
+export NO_ECC=1
 
 if [  -n "${ZSH_VERSION:-}" ]; then
         DIR="$(readlink -f -- "${(%):-%x}")"
@@ -10,3 +12,4 @@ else
 
 fi
 
+source $scriptDir/common.sh
