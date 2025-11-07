@@ -1,7 +1,6 @@
 export PULPRT_TARGET=opentitan-cluster
 export PULPRUN_TARGET=opentitan-cluster
 export CONFIG_NO_FC=1
-export ARCHI_HMR=1
 
 if [  -n "${ZSH_VERSION:-}" ]; then
         DIR="$(readlink -f -- "${(%):-%x}")"
