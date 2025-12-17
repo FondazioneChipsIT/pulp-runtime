@@ -46,11 +46,6 @@ extern "C" {
 #define IDMA_REG32_3D_CONF_DST_PROTOCOL_FIELD \
   ((bitfield_field32_t) { .mask = IDMA_REG32_3D_CONF_DST_PROTOCOL_MASK, .index = IDMA_REG32_3D_CONF_DST_PROTOCOL_OFFSET })
 
-// DMA Status (common parameters)
-#define IDMA_REG32_3D_STATUS_BUSY_FIELD_WIDTH 10
-#define IDMA_REG32_3D_STATUS_BUSY_FIELDS_PER_REG 3
-#define IDMA_REG32_3D_STATUS_MULTIREG_COUNT 16
-
 // DMA Status
 #define IDMA_REG32_3D_STATUS_0_REG_OFFSET 0x4
 #define IDMA_REG32_3D_STATUS_0_BUSY_0_MASK 0x3ff
@@ -65,210 +60,17 @@ extern "C" {
 #define IDMA_REG32_3D_STATUS_1_BUSY_1_FIELD \
   ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_1_BUSY_1_MASK, .index = IDMA_REG32_3D_STATUS_1_BUSY_1_OFFSET })
 
-// DMA Status
-#define IDMA_REG32_3D_STATUS_2_REG_OFFSET 0xc
-#define IDMA_REG32_3D_STATUS_2_BUSY_2_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_2_BUSY_2_OFFSET 0
-#define IDMA_REG32_3D_STATUS_2_BUSY_2_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_2_BUSY_2_MASK, .index = IDMA_REG32_3D_STATUS_2_BUSY_2_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_3_REG_OFFSET 0x10
-#define IDMA_REG32_3D_STATUS_3_BUSY_3_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_3_BUSY_3_OFFSET 0
-#define IDMA_REG32_3D_STATUS_3_BUSY_3_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_3_BUSY_3_MASK, .index = IDMA_REG32_3D_STATUS_3_BUSY_3_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_4_REG_OFFSET 0x14
-#define IDMA_REG32_3D_STATUS_4_BUSY_4_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_4_BUSY_4_OFFSET 0
-#define IDMA_REG32_3D_STATUS_4_BUSY_4_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_4_BUSY_4_MASK, .index = IDMA_REG32_3D_STATUS_4_BUSY_4_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_5_REG_OFFSET 0x18
-#define IDMA_REG32_3D_STATUS_5_BUSY_5_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_5_BUSY_5_OFFSET 0
-#define IDMA_REG32_3D_STATUS_5_BUSY_5_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_5_BUSY_5_MASK, .index = IDMA_REG32_3D_STATUS_5_BUSY_5_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_6_REG_OFFSET 0x1c
-#define IDMA_REG32_3D_STATUS_6_BUSY_6_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_6_BUSY_6_OFFSET 0
-#define IDMA_REG32_3D_STATUS_6_BUSY_6_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_6_BUSY_6_MASK, .index = IDMA_REG32_3D_STATUS_6_BUSY_6_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_7_REG_OFFSET 0x20
-#define IDMA_REG32_3D_STATUS_7_BUSY_7_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_7_BUSY_7_OFFSET 0
-#define IDMA_REG32_3D_STATUS_7_BUSY_7_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_7_BUSY_7_MASK, .index = IDMA_REG32_3D_STATUS_7_BUSY_7_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_8_REG_OFFSET 0x24
-#define IDMA_REG32_3D_STATUS_8_BUSY_8_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_8_BUSY_8_OFFSET 0
-#define IDMA_REG32_3D_STATUS_8_BUSY_8_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_8_BUSY_8_MASK, .index = IDMA_REG32_3D_STATUS_8_BUSY_8_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_9_REG_OFFSET 0x28
-#define IDMA_REG32_3D_STATUS_9_BUSY_9_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_9_BUSY_9_OFFSET 0
-#define IDMA_REG32_3D_STATUS_9_BUSY_9_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_9_BUSY_9_MASK, .index = IDMA_REG32_3D_STATUS_9_BUSY_9_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_10_REG_OFFSET 0x2c
-#define IDMA_REG32_3D_STATUS_10_BUSY_10_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_10_BUSY_10_OFFSET 0
-#define IDMA_REG32_3D_STATUS_10_BUSY_10_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_10_BUSY_10_MASK, .index = IDMA_REG32_3D_STATUS_10_BUSY_10_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_11_REG_OFFSET 0x30
-#define IDMA_REG32_3D_STATUS_11_BUSY_11_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_11_BUSY_11_OFFSET 0
-#define IDMA_REG32_3D_STATUS_11_BUSY_11_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_11_BUSY_11_MASK, .index = IDMA_REG32_3D_STATUS_11_BUSY_11_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_12_REG_OFFSET 0x34
-#define IDMA_REG32_3D_STATUS_12_BUSY_12_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_12_BUSY_12_OFFSET 0
-#define IDMA_REG32_3D_STATUS_12_BUSY_12_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_12_BUSY_12_MASK, .index = IDMA_REG32_3D_STATUS_12_BUSY_12_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_13_REG_OFFSET 0x38
-#define IDMA_REG32_3D_STATUS_13_BUSY_13_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_13_BUSY_13_OFFSET 0
-#define IDMA_REG32_3D_STATUS_13_BUSY_13_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_13_BUSY_13_MASK, .index = IDMA_REG32_3D_STATUS_13_BUSY_13_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_14_REG_OFFSET 0x3c
-#define IDMA_REG32_3D_STATUS_14_BUSY_14_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_14_BUSY_14_OFFSET 0
-#define IDMA_REG32_3D_STATUS_14_BUSY_14_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_14_BUSY_14_MASK, .index = IDMA_REG32_3D_STATUS_14_BUSY_14_OFFSET })
-
-// DMA Status
-#define IDMA_REG32_3D_STATUS_15_REG_OFFSET 0x40
-#define IDMA_REG32_3D_STATUS_15_BUSY_15_MASK 0x3ff
-#define IDMA_REG32_3D_STATUS_15_BUSY_15_OFFSET 0
-#define IDMA_REG32_3D_STATUS_15_BUSY_15_FIELD \
-  ((bitfield_field32_t) { .mask = IDMA_REG32_3D_STATUS_15_BUSY_15_MASK, .index = IDMA_REG32_3D_STATUS_15_BUSY_15_OFFSET })
+// Next ID, launches transfer, returns 0 if transfer not set up properly.
+#define IDMA_REG32_3D_NEXT_ID_0_REG_OFFSET 0xc
 
 // Next ID, launches transfer, returns 0 if transfer not set up properly.
-// (common parameters)
-#define IDMA_REG32_3D_NEXT_ID_NEXT_ID_FIELD_WIDTH 32
-#define IDMA_REG32_3D_NEXT_ID_NEXT_ID_FIELDS_PER_REG 1
-#define IDMA_REG32_3D_NEXT_ID_MULTIREG_COUNT 16
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_0_REG_OFFSET 0x44
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_1_REG_OFFSET 0x48
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_2_REG_OFFSET 0x4c
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_3_REG_OFFSET 0x50
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_4_REG_OFFSET 0x54
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_5_REG_OFFSET 0x58
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_6_REG_OFFSET 0x5c
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_7_REG_OFFSET 0x60
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_8_REG_OFFSET 0x64
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_9_REG_OFFSET 0x68
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_10_REG_OFFSET 0x6c
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_11_REG_OFFSET 0x70
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_12_REG_OFFSET 0x74
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_13_REG_OFFSET 0x78
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_14_REG_OFFSET 0x7c
-
-// Next ID, launches transfer, returns 0 if transfer not set up properly.
-#define IDMA_REG32_3D_NEXT_ID_15_REG_OFFSET 0x80
-
-// Get ID of finished transactions. (common parameters)
-#define IDMA_REG32_3D_DONE_ID_DONE_ID_FIELD_WIDTH 32
-#define IDMA_REG32_3D_DONE_ID_DONE_ID_FIELDS_PER_REG 1
-#define IDMA_REG32_3D_DONE_ID_MULTIREG_COUNT 16
+#define IDMA_REG32_3D_NEXT_ID_1_REG_OFFSET 0x10
 
 // Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_0_REG_OFFSET 0x84
+#define IDMA_REG32_3D_DONE_ID_0_REG_OFFSET 0x14
 
 // Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_1_REG_OFFSET 0x88
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_2_REG_OFFSET 0x8c
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_3_REG_OFFSET 0x90
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_4_REG_OFFSET 0x94
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_5_REG_OFFSET 0x98
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_6_REG_OFFSET 0x9c
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_7_REG_OFFSET 0xa0
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_8_REG_OFFSET 0xa4
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_9_REG_OFFSET 0xa8
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_10_REG_OFFSET 0xac
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_11_REG_OFFSET 0xb0
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_12_REG_OFFSET 0xb4
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_13_REG_OFFSET 0xb8
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_14_REG_OFFSET 0xbc
-
-// Get ID of finished transactions.
-#define IDMA_REG32_3D_DONE_ID_15_REG_OFFSET 0xc0
+#define IDMA_REG32_3D_DONE_ID_1_REG_OFFSET 0x18
 
 // Low destination address
 #define IDMA_REG32_3D_DST_ADDR_LOW_REG_OFFSET 0xd0
