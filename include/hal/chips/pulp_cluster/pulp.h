@@ -44,7 +44,7 @@
 #include "hal/tcdm_scrubber/tcdm_scrubber.h"
 #include "hal/hwpe_hci_ecc/hwpe_hci_ecc.h"
 
-// #include "hal/dma/mchan_v7.h"
+#include "hal/dma/mchan_v7.h"
 
 #include "hal/dma/idma_v2.h"
 
