@@ -61,25 +61,25 @@ typedef unsigned int mchan_ext_t;
   \param   loc     Address in the cluster memory where to access the data. There is no restriction on memory alignment.
   \param   size    Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
   \param   ext2loc If 1, the transfer is loading data from external memory and storing to cluster memory. If 0, it is the contrary
-  \return       The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return       The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
-static inline int plp_dma_memcpy(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc);
+static inline int plp_mchan_memcpy(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc);
 
 /** Cluster memory to external memory transfer with event-based completion. 
  * 
   \param   ext  Address in the external memory where to store the data. There is no restriction on memory alignment.
   \param   loc  Address in the cluster memory where to load the data. There is no restriction on memory alignment.
   \param   size Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
-  \return       The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return       The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
-static inline int plp_dma_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned short size);
+static inline int plp_mchan_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned short size);
 
 /** External memory to cluster memory transfer with event-based completion. 
  * 
   \param   loc  Address in the cluster memory where to store the data. There is no restriction on memory alignment.
   \param   ext  Address in the external memory where to load the data. There is no restriction on memory alignment.
   \param   size Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
-  \return       The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return       The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
 static inline int plp_dma_extToL1(unsigned int loc, mchan_ext_t ext, unsigned short size);
 
@@ -89,16 +89,16 @@ static inline int plp_dma_extToL1(unsigned int loc, mchan_ext_t ext, unsigned sh
   \param   loc     Address in the cluster memory where to access the data. There is no restriction on memory alignment.
   \param   size    Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
   \param   ext2loc If 1, the transfer is loading data from external memory and storing to cluster memory. If 0, it is the contrary
-  \return       The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return       The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
-static inline int plp_dma_memcpy_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc);
+static inline int plp_mchan_memcpy_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc);
 
 /** Cluster memory to external memory transfer with irq-based completion. 
  * 
   \param   ext  Address in the external memory where to store the data. There is no restriction on memory alignment.
   \param   loc  Address in the cluster memory where to load the data. There is no restriction on memory alignment.
   \param   size Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
-  \return       The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return       The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
 static inline int plp_dma_l1ToExt_irq(mchan_ext_t ext, unsigned int loc, unsigned short size);
 
@@ -107,7 +107,7 @@ static inline int plp_dma_l1ToExt_irq(mchan_ext_t ext, unsigned int loc, unsigne
   \param   loc  Address in the cluster memory where to store the data. There is no restriction on memory alignment.
   \param   ext  Address in the external memory where to load the data. There is no restriction on memory alignment.
   \param   size Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
-  \return       The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return       The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
 static inline int plp_dma_extToL1_irq(unsigned int loc, mchan_ext_t ext, unsigned short size);
 
@@ -119,9 +119,9 @@ static inline int plp_dma_extToL1_irq(unsigned int loc, mchan_ext_t ext, unsigne
   \param   stride 2D stride, which is the number of bytes which are added to the beginning of the current line to switch to the next one. Must fit 16 bits, i.e. must be inferior to 65536.
   \param   length 2D length, which is the number of transfered bytes after which the DMA will switch to the next line. Must fit 16 bits, i.e. must be inferior to 65536.
   \param   ext2loc If 1, the transfer is loading data from external memory and storing to cluster memory. If 0, it is the contrary
-  \return         The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return         The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
-static inline int plp_dma_memcpy_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc);
+static inline int plp_mchan_memcpy_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc);
 
 /** Cluster memory to external memory 2-dimensional transfer with event-based completion. 
  * 
@@ -130,9 +130,9 @@ static inline int plp_dma_memcpy_2d(mchan_ext_t ext, unsigned int loc, unsigned 
   \param   size   Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
   \param   stride 2D stride, which is the number of bytes which are added to the beginning of the current line to switch to the next one. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
   \param   length 2D length, which is the number of transfered bytes after which the DMA will switch to the next line. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
-  \return         The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return         The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
-static inline int plp_dma_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length);
+static inline int plp_mchan_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length);
 
 /** External memory to cluster memory 2-dimensional transfer with event-based completion. 
  * 
@@ -141,9 +141,9 @@ static inline int plp_dma_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned
   \param   size   Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
   \param   stride 2D stride, which is the number of bytes which are added to the beginning of the current line to switch to the next one. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
   \param   length 2D length, which is the number of transfered bytes after which the DMA will switch to the next line. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
-  \return         The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer
+  \return         The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer
   */
-static inline int plp_dma_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length);
+static inline int plp_mchan_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length);
 
 /** 2-dimensional memory transfer with irq-based completion. 
  * 
@@ -153,9 +153,9 @@ static inline int plp_dma_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned
   \param   stride 2D stride, which is the number of bytes which are added to the beginning of the current line to switch to the next one. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
   \param   length 2D length, which is the number of transfered bytes after which the DMA will switch to the next line. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
   \param   ext2loc If 1, the transfer is loading data from external memory and storing to cluster memory. If 0, it is the contrary
-  \return         The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return         The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
-static inline int plp_dma_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc);
+static inline int plp_mchan_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc);
 
 /** Cluster memory to external memory 2-dimensional transfer with irq-based completion. 
  * 
@@ -164,7 +164,7 @@ static inline int plp_dma_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, unsig
   \param   size   Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
   \param   stride 2D stride, which is the number of bytes which are added to the beginning of the current line to switch to the next one. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
   \param   length 2D length, which is the number of transfered bytes after which the DMA will switch to the next line. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
-  \return         The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return         The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
 static inline int plp_dma_l1ToExt_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length);
 
@@ -175,7 +175,7 @@ static inline int plp_dma_l1ToExt_2d_irq(mchan_ext_t ext, unsigned int loc, unsi
   \param   size   Number of bytes to be transfered. The only restriction is that this size must fit 16 bits, i.e. must be inferior to 65536.
   \param   stride 2D stride, which is the number of bytes which are added to the beginning of the current line to switch to the next one. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
   \param   length 2D length, which is the number of transfered bytes after which the DMA will switch to the next line. Must fit 16 bits, i.e. must be inferior to 65536. This applies only to the external memory.
-  \return         The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer
+  \return         The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer
   */
 static inline int plp_dma_extToL1_2d_irq(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length);
 
@@ -187,14 +187,14 @@ static inline int plp_dma_extToL1_2d_irq(unsigned int loc, mchan_ext_t ext, unsi
 /** DMA barrier.
  * This blocks the core until no transfer is on-going in the DMA. 
  */
-static inline void plp_dma_barrier();
+static inline void plp_mchan_barrier();
 
 /** DMA wait.
   * This blocks the core until the specified transfer is finished. 
   *
   \param   counter  The counter ID identifying the transfer. This has either been allocated explicitly or returned from an enqueued transfer (e.g. plp_dma_extToL1_2d_irq)
  */
-static inline void plp_dma_wait(unsigned int counter);
+static inline void plp_mchan_wait(unsigned int counter);
 
 //!@}
 
@@ -207,7 +207,7 @@ static inline void plp_dma_wait(unsigned int counter);
  * This allocates a counter and activate it for all the next transfers until another one is allocated. This means during this period, all transfers will be accounted on this counter and thus waiting
  * on this counter will wait for all these transfers.
  * 
-  \return         The identifier of the transfer. This can be used with plp_dma_wait to wait for the completion of this transfer.
+  \return         The identifier of the transfer. This can be used with plp_mchan_wait to wait for the completion of this transfer.
   */
 static inline int plp_dma_counter_alloc();
 
@@ -260,47 +260,46 @@ static inline void plp_dma_cmd_push_2d(unsigned int cmd, unsigned int locAddr, m
  * 
   \return             Counter status. There is one bit per counter. 1 means there are still on-going transfers for this counter, 0 means nothing is on-going.
   */  
-static inline unsigned int plp_dma_status();
+static inline unsigned int plp_mchan_status();
 
 //!@}
 
 /// @cond IMPLEM
 
-#if defined(__riscv__) && !defined(RV_ISA_RV32) && !defined(__LLVM__)
-#ifdef ARCHI_HAS_DMA_DEMUX
-#define DMA_WRITE_DEMUX(value, offset) __builtin_pulp_OffsetedWrite((value), (int *)ARCHI_MCHAN_DEMUX_ADDR, (offset))
-#define DMA_READ_DEMUX(offset) __builtin_pulp_OffsetedRead((int *)ARCHI_MCHAN_DEMUX_ADDR, (offset))
-#endif // ARCHI_HAS_DMA_DEMUX
-#define DMA_WRITE(value, offset) __builtin_pulp_OffsetedWrite((value), (int *)ARCHI_MCHAN_EXT_ADDR, (offset))
-#define DMA_READ(offset) __builtin_pulp_OffsetedRead((int *)ARCHI_MCHAN_EXT_ADDR, (offset))
+#if ARCHI_HAS_DMA_DEMUX
+#define MCHAN_ADDR ARCHI_MCHAN_DEMUX_ADDR
 #else
-#ifdef ARCHI_HAS_DMA_DEMUX
-#define DMA_WRITE_DEMUX(value, offset) pulp_write32(ARCHI_MCHAN_DEMUX_ADDR + (offset), (value))
-#define DMA_READ_DEMUX(value, offset) pulp_read32(ARCHI_MCHAN_DEMUX_ADDR + (offset))
-#endif // ARCHI_HAS_DMA_DEMUX
-#define DMA_WRITE(value, offset) pulp_write32(ARCHI_MCHAN_EXT_ADDR + (offset), (value))
-#define DMA_READ(offset) pulp_read32(ARCHI_MCHAN_EXT_ADDR + (offset))
+#define MCHAN_ADDR ARCHI_MCHAN_EXT_ADDR
 #endif
 
+#if defined(__riscv__) && !defined(RV_ISA_RV32) && !defined(__LLVM__)
+#define MCHAN_WRITE(value, offset) __builtin_pulp_OffsetedWrite((value), (int *)MCHAN_ADDR, (offset))
+#define MCHAN_READ(offset) __builtin_pulp_OffsetedRead((int *)MCHAN_ADDR, (offset))
+#else
+#define MCHAN_WRITE(value, offset) pulp_write32(MCHAN_ADDR + (offset), (value))
+#define MCHAN_READ(offset) pulp_read32(MCHAN_ADDR + (offset))
+#endif
+
+
 static inline int plp_dma_counter_alloc() {
-  return DMA_READ(MCHAN_CMD_OFFSET);
+  return MCHAN_READ(MCHAN_CMD_OFFSET);
 }
 
 static inline int plp_cl_dma_counter_alloc() {
 #ifdef ARCHI_HAS_DMA_DEMUX
-  return DMA_READ_DEMUX(MCHAN_CMD_OFFSET);
+  return MCHAN_READ(MCHAN_CMD_OFFSET);
 #else // ARCHI_HAS_DMA_DEMUX
   return plp_dma_counter_alloc();
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
 static inline void plp_dma_counter_free(int counter) {
-  DMA_WRITE(1<<counter, MCHAN_STATUS_OFFSET);
+  MCHAN_WRITE(1<<counter, MCHAN_STATUS_OFFSET);
 }
 
 static inline void plp_cl_dma_counter_free(int counter) {
 #ifdef ARCHI_HAS_DMA_DEMUX
-  DMA_WRITE_DEMUX(1<<counter, MCHAN_STATUS_OFFSET);
+  MCHAN_WRITE(1<<counter, MCHAN_STATUS_OFFSET);
 #else // ARCHI_HAS_DMA_DEMUX
   plp_dma_counter_free(counter);
 #endif // ARCHI_HAS_DMA_DEMUX
@@ -327,25 +326,25 @@ static inline unsigned int plp_cl_dma_getCmd(int ext2loc, unsigned int size, int
 }
 
 static inline void plp_dma_cmd_push(unsigned int cmd, unsigned int locAddr, mchan_ext_t extAddr) {
-  DMA_WRITE(cmd, MCHAN_CMD_OFFSET);
-  DMA_WRITE(locAddr, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(cmd, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(locAddr, MCHAN_CMD_OFFSET);
 #if defined(ARCHI_HAS_MCHAN_64) && ARCHI_HAS_MCHAN_64 == 1
-  DMA_WRITE((int)extAddr, MCHAN_CMD_OFFSET);
-  DMA_WRITE((int)(extAddr>>32), MCHAN_CMD_OFFSET);
+  MCHAN_WRITE((int)extAddr, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE((int)(extAddr>>32), MCHAN_CMD_OFFSET);
 #else
-  DMA_WRITE(extAddr, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(extAddr, MCHAN_CMD_OFFSET);
 #endif
 }
 
 static inline void plp_cl_dma_cmd_push(unsigned int cmd, unsigned int locAddr, mchan_ext_t extAddr) {
 #ifdef ARCHI_HAS_DMA_DEMUX
-  DMA_WRITE_DEMUX(cmd, MCHAN_CMD_OFFSET);
-  DMA_WRITE_DEMUX(locAddr, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(cmd, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(locAddr, MCHAN_CMD_OFFSET);
 #if defined(ARCHI_HAS_MCHAN_64) && ARCHI_HAS_MCHAN_64 == 1
-  DMA_WRITE_DEMUX((int)extAddr, MCHAN_CMD_OFFSET);
-  DMA_WRITE_DEMUX((int)(extAddr>>32), MCHAN_CMD_OFFSET);
+  MCHAN_WRITE((int)extAddr, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE((int)(extAddr>>32), MCHAN_CMD_OFFSET);
 #else
-  DMA_WRITE_DEMUX(extAddr, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(extAddr, MCHAN_CMD_OFFSET);
 #endif
 #else // ARCHI_HAS_DMA_DEMUX
   plp_dma_cmd_push(cmd, locAddr, extAddr);
@@ -354,64 +353,64 @@ static inline void plp_cl_dma_cmd_push(unsigned int cmd, unsigned int locAddr, m
 
 static inline void plp_dma_cmd_push_2d(unsigned int cmd, unsigned int locAddr, mchan_ext_t extAddr, unsigned int stride, unsigned int length) {
   plp_dma_cmd_push(cmd, locAddr, extAddr);
-  DMA_WRITE(length, MCHAN_CMD_OFFSET);
-  DMA_WRITE(stride, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(length, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(stride, MCHAN_CMD_OFFSET);
 }
 
 static inline void plp_cl_dma_cmd_push_2d(unsigned int cmd, unsigned int locAddr, mchan_ext_t extAddr, unsigned int stride, unsigned int length) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   plp_cl_dma_cmd_push(cmd, locAddr, extAddr);
-  DMA_WRITE_DEMUX(length, MCHAN_CMD_OFFSET);
-  DMA_WRITE_DEMUX(stride, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(length, MCHAN_CMD_OFFSET);
+  MCHAN_WRITE(stride, MCHAN_CMD_OFFSET);
 #else // ARCHI_HAS_DMA_DEMUX
   plp_dma_cmd_push_2d(cmd, locAddr, extAddr, stride, length);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline int plp_dma_memcpy(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
+static inline int plp_mchan_memcpy(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
   unsigned int counter = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(ext2loc, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_dma_cmd_push(cmd, loc, ext);
   return counter;
 }
 
-static inline int plp_cl_dma_memcpy(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
+static inline int plp_cl_mchan_memcpy(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_dma_counter_alloc();
   unsigned int cmd = plp_cl_dma_getCmd(ext2loc, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_cl_dma_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
-  return plp_dma_memcpy(ext, loc, size, ext2loc);
+  return plp_mchan_memcpy(ext, loc, size, ext2loc);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline int plp_dma_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned short size) {
+static inline int plp_mchan_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned short size) {
   unsigned int counter = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_dma_cmd_push(cmd, loc, ext);
   return counter;
 }
 
-static inline int plp_cl_dma_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned short size) {
+static inline int plp_cl_mchan_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned short size) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_dma_counter_alloc();
   unsigned int cmd = plp_cl_dma_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_cl_dma_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
-  return plp_dma_l1ToExt(ext, loc, size);
+  return plp_mchan_l1ToExt(ext, loc, size);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline int plp_dma_extToL1(unsigned int loc, mchan_ext_t ext, unsigned short size) {
+static inline int plp_mchan_extToL1(unsigned int loc, mchan_ext_t ext, unsigned short size) {
   unsigned int counter = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_dma_cmd_push(cmd, loc, ext);
   return counter;
 }
 
-static inline int plp_cl_dma_extToL1(unsigned int loc, mchan_ext_t ext, unsigned short size) {
+static inline int plp_cl_mchan_extToL1(unsigned int loc, mchan_ext_t ext, unsigned short size) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_dma_counter_alloc();
   unsigned int cmd = plp_cl_dma_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
@@ -422,7 +421,7 @@ static inline int plp_cl_dma_extToL1(unsigned int loc, mchan_ext_t ext, unsigned
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline int plp_dma_memcpy_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
+static inline int plp_mchan_memcpy_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
   unsigned int counter = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(ext2loc, size, PLP_DMA_1D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
   plp_dma_cmd_push(cmd, loc, ext);
@@ -436,7 +435,7 @@ static inline int plp_cl_dma_memcpy_irq(mchan_ext_t ext, unsigned int loc, unsig
   plp_cl_dma_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
-  return plp_dma_memcpy_irq(ext, loc, size, ext2loc);
+  return plp_mchan_memcpy_irq(ext, loc, size, ext2loc);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
@@ -490,59 +489,59 @@ static inline void plp_cl_dma_memcpy_2d_keepCounter(mchan_ext_t ext, unsigned in
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline int plp_dma_memcpy_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
+static inline int plp_mchan_memcpy_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
   unsigned int counter = plp_dma_counter_alloc();
   plp_dma_memcpy_2d_keepCounter(ext, loc, size, stride, length, ext2loc);
   return counter;
 }
 
-static inline int plp_cl_dma_memcpy_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
+static inline int plp_cl_mchan_memcpy_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_dma_counter_alloc();
   plp_cl_dma_memcpy_2d_keepCounter(ext, loc, size, stride, length, ext2loc);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
-  return plp_dma_memcpy_2d(ext, loc, size, stride, length, ext2loc);
+  return plp_mchan_memcpy_2d(ext, loc, size, stride, length, ext2loc);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline int plp_dma_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length) {
+static inline int plp_mchan_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length) {
   unsigned int counter = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_dma_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 }
 
-static inline int plp_cl_dma_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length) {
+static inline int plp_cl_mchan_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_dma_counter_alloc();
   unsigned int cmd = plp_cl_dma_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_cl_dma_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
-  return plp_dma_l1ToExt_2d(ext, loc, size, stride, length);
+  return plp_mchan_l1ToExt_2d(ext, loc, size, stride, length);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline int plp_dma_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length) {
+static inline int plp_mchan_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length) {
   unsigned int counter = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_dma_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 }
 
-static inline int plp_cl_dma_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length) {
+static inline int plp_cl_mchan_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_dma_counter_alloc();
   unsigned int cmd = plp_cl_dma_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
   plp_cl_dma_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
-  return plp_dma_extToL1_2d(loc, ext, size, stride, length);
+  return plp_mchan_extToL1_2d(loc, ext, size, stride, length);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline int plp_dma_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
+static inline int plp_mchan_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
   unsigned int counter = plp_dma_counter_alloc();
   unsigned int cmd = plp_dma_getCmd(ext2loc, size, PLP_DMA_2D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
   plp_dma_cmd_push_2d(cmd, loc, ext, stride, length);
@@ -556,7 +555,7 @@ static inline int plp_cl_dma_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, un
   plp_cl_dma_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
-  return plp_dma_memcpy_2d_irq(ext, loc, size, stride, length, ext2loc);
+  return plp_mchan_memcpy_2d_irq(ext, loc, size, stride, length, ext2loc);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
@@ -596,51 +595,51 @@ static inline int plp_cl_dma_extToL1_2d_irq(unsigned int loc, mchan_ext_t ext, u
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline void plp_dma_barrier() {
-  while(DMA_READ(MCHAN_STATUS_OFFSET) & 0xFFFF) {
+static inline void plp_mchan_barrier() {
+  while(MCHAN_READ(MCHAN_STATUS_OFFSET) & 0xFFFF) {
     eu_evt_maskWaitAndClr(1<<ARCHI_CL_EVT_DMA0);
   }
-  DMA_WRITE(-1, MCHAN_STATUS_OFFSET);
+  MCHAN_WRITE(-1, MCHAN_STATUS_OFFSET);
 }
 
-static inline void plp_cl_dma_barrier() {
+static inline void plp_cl_mchan_barrier() {
 #ifdef ARCHI_HAS_DMA_DEMUX
-  while(DMA_READ_DEMUX(MCHAN_STATUS_OFFSET) & 0xFFFF) {
+  while(MCHAN_READ(MCHAN_STATUS_OFFSET) & 0xFFFF) {
     eu_evt_maskWaitAndClr(1<<ARCHI_CL_EVT_DMA0);
   }
-  DMA_WRITE_DEMUX(-1, MCHAN_STATUS_OFFSET);
+  MCHAN_WRITE(-1, MCHAN_STATUS_OFFSET);
 #else // ARCHI_HAS_DMA_DEMUX
-  plp_dma_barrier();
+  plp_mchan_barrier();
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline void plp_dma_wait(unsigned int counter) {
-  while(DMA_READ(MCHAN_STATUS_OFFSET) & (1 << counter)) {
+static inline void plp_mchan_wait(unsigned int counter) {
+  while(MCHAN_READ(MCHAN_STATUS_OFFSET) & (1 << counter)) {
     eu_evt_maskWaitAndClr(1<<ARCHI_CL_EVT_DMA0);
   }
   plp_dma_counter_free(counter);
 }
 
-static inline void plp_cl_dma_wait(unsigned int counter) {
+static inline void plp_cl_mchan_wait(unsigned int counter) {
 #ifdef ARCHI_HAS_DMA_DEMUX
-  while(DMA_READ_DEMUX(MCHAN_STATUS_OFFSET) & (1 << counter)) {
+  while(MCHAN_READ(MCHAN_STATUS_OFFSET) & (1 << counter)) {
     eu_evt_maskWaitAndClr(1<<ARCHI_CL_EVT_DMA0);
   }
   plp_dma_counter_free(counter);
 #else // ARCHI_HAS_DMA_DEMUX
-  plp_dma_wait(counter);
+  plp_mchan_wait(counter);
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
-static inline unsigned int plp_dma_status() {
-  return DMA_READ(MCHAN_STATUS_OFFSET);
+static inline unsigned int plp_mchan_status() {
+  return MCHAN_READ(MCHAN_STATUS_OFFSET);
 }
 
-static inline unsigned int plp_cl_dma_status() {
+static inline unsigned int plp_cl_mchan_status() {
 #ifdef ARCHI_HAS_DMA_DEMUX
-  return DMA_READ_DEMUX(MCHAN_STATUS_OFFSET);
+  return MCHAN_READ(MCHAN_STATUS_OFFSET);
 #else // ARCHI_HAS_DMA_DEMUX
-  return plp_dma_status();
+  return plp_mchan_status();
 #endif // ARCHI_HAS_DMA_DEMUX
 }
 
