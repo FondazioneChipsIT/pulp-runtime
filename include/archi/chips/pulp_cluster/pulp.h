@@ -38,7 +38,7 @@
 #include "archi/chips/pulp_cluster/apb_soc.h"
 #include "archi/stdout/stdout_v3.h"
 
-// #include "archi/dma/mchan_v7.h"
+#include "archi/dma/mchan_v7.h"
 
 #include "archi/dma/idma_v2.h"
 
