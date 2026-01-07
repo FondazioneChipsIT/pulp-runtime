@@ -156,11 +156,6 @@ else
 LOAD_MODE := JTAG
 endif
 
-ifeq '$(pulp_chip)' 'carfield-cluster'
-ENTRY=0x78008080
-else
-ENTRY=0x1c008080
-endif
 #
 # VSIM Flags
 #
