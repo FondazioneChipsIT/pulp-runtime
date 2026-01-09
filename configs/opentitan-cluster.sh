@@ -11,3 +11,4 @@ else
 
 fi
 
+source $scriptDir/common.sh
