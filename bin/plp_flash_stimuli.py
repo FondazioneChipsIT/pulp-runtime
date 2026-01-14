@@ -87,7 +87,7 @@ class FlashImage(object):
         self.flashOffset = 0
         if flashType == 'hyper': self.blockSize = 1024
         else: self.blockSize = 4096
-        self.bootaddr = 0xa0000000
+        self.bootaddr = 0xc0000000
         self.verbose = verbose
         self.archi = archi
         self.encrypt = encrypt
