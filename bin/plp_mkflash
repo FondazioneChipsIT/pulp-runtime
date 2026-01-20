@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 #file extracted from pulp sdk : https://github.com/pulp-platform/pulp-sdk.git
 #to be used in marsellus project
