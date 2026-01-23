@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.12
 
 #
 # Copyright (C) 2018 ETH Zurich, University of Bologna
