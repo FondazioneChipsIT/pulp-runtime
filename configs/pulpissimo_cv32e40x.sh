@@ -4,6 +4,7 @@ export PULPRT_TARGET=pulpissimo
 export PULPRUN_TARGET=pulpissimo
 export USE_CV32E40X=1
 export CONFIG_PLUSARG_SIM=1
+export LLVM_COMPILER=1
 export bootmode=fast_debug
 
 if [  -n "${ZSH_VERSION:-}" ]; then
