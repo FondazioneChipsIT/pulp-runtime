@@ -20,23 +20,23 @@
 #include <archi/dma/mchan_v7.h>
 #include "hal/pulp.h"
 
-#define PLP_DMA_LOC2EXT 0
-#define PLP_DMA_EXT2LOC 1
+#define PLP_MCHAN_LOC2EXT 0
+#define PLP_MCHAN_EXT2LOC 1
 
-#define PLP_DMA_1D 0
-#define PLP_DMA_2D 1
+#define PLP_MCHAN_1D 0
+#define PLP_MCHAN_2D 1
 
-#define PLP_DMA_NO_TRIG_EVT 0
-#define PLP_DMA_TRIG_EVT    1
+#define PLP_MCHAN_NO_TRIG_EVT 0
+#define PLP_MCHAN_TRIG_EVT    1
 
-#define PLP_DMA_NO_TRIG_IRQ 0
-#define PLP_DMA_TRIG_IRQ    1
+#define PLP_MCHAN_NO_TRIG_IRQ 0
+#define PLP_MCHAN_TRIG_IRQ    1
 
-#define PLP_DMA_PRIV        0
-#define PLP_DMA_SHARED      1
+#define PLP_MCHAN_PRIV        0
+#define PLP_MCHAN_SHARED      1
 
-#define PLP_DMA_FIX         0
-#define PLP_DMA_INC         1
+#define PLP_MCHAN_FIX         0
+#define PLP_MCHAN_INC         1
 
 #if defined(ARCHI_HAS_MCHAN_64) && ARCHI_HAS_MCHAN_64 == 1
 typedef unsigned long long mchan_ext_t;
@@ -309,7 +309,7 @@ static inline unsigned int plp_mchan_getCmd(int ext2loc, unsigned int size, int 
 #if defined(__riscv__)
   unsigned int res;
   res = __builtin_bitinsert(0,  ext2loc,      1, MCHAN_CMD_CMD_TYPE_BIT);
-  res = __builtin_bitinsert(res, PLP_DMA_INC, 1, MCHAN_CMD_CMD_INC_BIT);
+  res = __builtin_bitinsert(res, PLP_MCHAN_INC, 1, MCHAN_CMD_CMD_INC_BIT);
   res = __builtin_bitinsert(res, (!ext2loc && is2D), 1, MCHAN_CMD_CMD__2D_EXT_BIT);
   res = __builtin_bitinsert(res, size,        MCHAN_CMD_CMD_LEN_WIDTH, MCHAN_CMD_CMD_LEN_BIT);
   res = __builtin_bitinsert(res, trigEvt,     1, MCHAN_CMD_CMD_ELE_BIT);
@@ -318,7 +318,7 @@ static inline unsigned int plp_mchan_getCmd(int ext2loc, unsigned int size, int 
   res = __builtin_bitinsert(res, (ext2loc && is2D),        1, MCHAN_CMD_CMD__2D_TCDM_BIT);
   return res;
 #else
-  return (ext2loc << MCHAN_CMD_CMD_TYPE_BIT) | (PLP_DMA_INC << MCHAN_CMD_CMD_INC_BIT) | (is2D << MCHAN_CMD_CMD__2D_EXT_BIT) | (size << MCHAN_CMD_CMD_LEN_BIT) | (trigEvt<<MCHAN_CMD_CMD_ELE_BIT) | (trigIrq<<MCHAN_CMD_CMD_ILE_BIT) | (broadcast<<MCHAN_CMD_CMD_BLE_BIT);
+  return (ext2loc << MCHAN_CMD_CMD_TYPE_BIT) | (PLP_MCHAN_INC << MCHAN_CMD_CMD_INC_BIT) | (is2D << MCHAN_CMD_CMD__2D_EXT_BIT) | (size << MCHAN_CMD_CMD_LEN_BIT) | (trigEvt<<MCHAN_CMD_CMD_ELE_BIT) | (trigIrq<<MCHAN_CMD_CMD_ILE_BIT) | (broadcast<<MCHAN_CMD_CMD_BLE_BIT);
 #endif
 }
 
@@ -370,7 +370,7 @@ static inline void plp_cl_mchan_cmd_push_2d(unsigned int cmd, unsigned int locAd
 
 static inline int plp_mchan_memcpy(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(ext2loc, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(ext2loc, size, PLP_MCHAN_1D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push(cmd, loc, ext);
   return counter;
 }
@@ -378,7 +378,7 @@ static inline int plp_mchan_memcpy(mchan_ext_t ext, unsigned int loc, unsigned s
 static inline int plp_cl_mchan_memcpy(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(ext2loc, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(ext2loc, size, PLP_MCHAN_1D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -388,7 +388,7 @@ static inline int plp_cl_mchan_memcpy(mchan_ext_t ext, unsigned int loc, unsigne
 
 static inline int plp_mchan_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned short size) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(PLP_MCHAN_LOC2EXT, size, PLP_MCHAN_1D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push(cmd, loc, ext);
   return counter;
 }
@@ -396,7 +396,7 @@ static inline int plp_mchan_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned 
 static inline int plp_cl_mchan_l1ToExt(mchan_ext_t ext, unsigned int loc, unsigned short size) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(PLP_MCHAN_LOC2EXT, size, PLP_MCHAN_1D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -406,7 +406,7 @@ static inline int plp_cl_mchan_l1ToExt(mchan_ext_t ext, unsigned int loc, unsign
 
 static inline int plp_mchan_extToL1(unsigned int loc, mchan_ext_t ext, unsigned short size) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(PLP_MCHAN_EXT2LOC, size, PLP_MCHAN_1D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push(cmd, loc, ext);
   return counter;
 }
@@ -414,7 +414,7 @@ static inline int plp_mchan_extToL1(unsigned int loc, mchan_ext_t ext, unsigned 
 static inline int plp_cl_mchan_extToL1(unsigned int loc, mchan_ext_t ext, unsigned short size) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_1D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(PLP_MCHAN_EXT2LOC, size, PLP_MCHAN_1D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -424,7 +424,7 @@ static inline int plp_cl_mchan_extToL1(unsigned int loc, mchan_ext_t ext, unsign
 
 static inline int plp_mchan_memcpy_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(ext2loc, size, PLP_DMA_1D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(ext2loc, size, PLP_MCHAN_1D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push(cmd, loc, ext);
   return counter;
 }
@@ -432,7 +432,7 @@ static inline int plp_mchan_memcpy_irq(mchan_ext_t ext, unsigned int loc, unsign
 static inline int plp_cl_mchan_memcpy_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(ext2loc, size, PLP_DMA_1D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(ext2loc, size, PLP_MCHAN_1D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -442,7 +442,7 @@ static inline int plp_cl_mchan_memcpy_irq(mchan_ext_t ext, unsigned int loc, uns
 
 static inline int plp_mchan_l1ToExt_irq(mchan_ext_t ext, unsigned int loc, unsigned short size) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_1D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(PLP_MCHAN_LOC2EXT, size, PLP_MCHAN_1D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push(cmd, loc, ext);
   return counter;
 }
@@ -450,7 +450,7 @@ static inline int plp_mchan_l1ToExt_irq(mchan_ext_t ext, unsigned int loc, unsig
 static inline int plp_cl_mchan_l1ToExt_irq(mchan_ext_t ext, unsigned int loc, unsigned short size) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_1D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(PLP_MCHAN_LOC2EXT, size, PLP_MCHAN_1D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -460,7 +460,7 @@ static inline int plp_cl_mchan_l1ToExt_irq(mchan_ext_t ext, unsigned int loc, un
 
 static inline int plp_mchan_extToL1_irq(unsigned int loc, mchan_ext_t ext, unsigned short size) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_1D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(PLP_MCHAN_EXT2LOC, size, PLP_MCHAN_1D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push(cmd, loc, ext);
   return counter;
 }
@@ -468,7 +468,7 @@ static inline int plp_mchan_extToL1_irq(unsigned int loc, mchan_ext_t ext, unsig
 static inline int plp_cl_mchan_extToL1_irq(unsigned int loc, mchan_ext_t ext, unsigned short size) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_1D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(PLP_MCHAN_EXT2LOC, size, PLP_MCHAN_1D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push(cmd, loc, ext);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -477,13 +477,13 @@ static inline int plp_cl_mchan_extToL1_irq(unsigned int loc, mchan_ext_t ext, un
 }
 
 static inline void plp_mchan_memcpy_2d_keepCounter(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
-  unsigned int cmd = plp_mchan_getCmd(ext2loc, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(ext2loc, size, PLP_MCHAN_2D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
 }
 
 static inline void plp_cl_mchan_memcpy_2d_keepCounter(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
 #ifdef ARCHI_HAS_DMA_DEMUX
-  unsigned int cmd = plp_cl_mchan_getCmd(ext2loc, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(ext2loc, size, PLP_MCHAN_2D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
 #else // ARCHI_HAS_DMA_DEMUX
   plp_mchan_memcpy_2d_keepCounter(ext, loc, size, stride, length, ext2loc);
@@ -508,7 +508,7 @@ static inline int plp_cl_mchan_memcpy_2d(mchan_ext_t ext, unsigned int loc, unsi
 
 static inline int plp_mchan_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(PLP_MCHAN_LOC2EXT, size, PLP_MCHAN_2D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 }
@@ -516,7 +516,7 @@ static inline int plp_mchan_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsign
 static inline int plp_cl_mchan_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(PLP_MCHAN_LOC2EXT, size, PLP_MCHAN_2D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -526,7 +526,7 @@ static inline int plp_cl_mchan_l1ToExt_2d(mchan_ext_t ext, unsigned int loc, uns
 
 static inline int plp_mchan_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(PLP_MCHAN_EXT2LOC, size, PLP_MCHAN_2D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 }
@@ -534,7 +534,7 @@ static inline int plp_mchan_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsign
 static inline int plp_cl_mchan_extToL1_2d(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_2D, PLP_DMA_TRIG_EVT, PLP_DMA_NO_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(PLP_MCHAN_EXT2LOC, size, PLP_MCHAN_2D, PLP_MCHAN_TRIG_EVT, PLP_MCHAN_NO_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -544,7 +544,7 @@ static inline int plp_cl_mchan_extToL1_2d(unsigned int loc, mchan_ext_t ext, uns
 
 static inline int plp_mchan_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(ext2loc, size, PLP_DMA_2D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(ext2loc, size, PLP_MCHAN_2D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 }
@@ -552,7 +552,7 @@ static inline int plp_mchan_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, uns
 static inline int plp_cl_mchan_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length, int ext2loc) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(ext2loc, size, PLP_DMA_2D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(ext2loc, size, PLP_MCHAN_2D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -562,7 +562,7 @@ static inline int plp_cl_mchan_memcpy_2d_irq(mchan_ext_t ext, unsigned int loc, 
 
 static inline int plp_mchan_l1ToExt_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_2D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(PLP_MCHAN_LOC2EXT, size, PLP_MCHAN_2D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 }
@@ -570,7 +570,7 @@ static inline int plp_mchan_l1ToExt_2d_irq(mchan_ext_t ext, unsigned int loc, un
 static inline int plp_cl_mchan_l1ToExt_2d_irq(mchan_ext_t ext, unsigned int loc, unsigned short size, unsigned short stride, unsigned short length) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(PLP_DMA_LOC2EXT, size, PLP_DMA_2D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(PLP_MCHAN_LOC2EXT, size, PLP_MCHAN_2D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
@@ -580,7 +580,7 @@ static inline int plp_cl_mchan_l1ToExt_2d_irq(mchan_ext_t ext, unsigned int loc,
 
 static inline int plp_mchan_extToL1_2d_irq(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length) {
   unsigned int counter = plp_mchan_counter_alloc();
-  unsigned int cmd = plp_mchan_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_2D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_mchan_getCmd(PLP_MCHAN_EXT2LOC, size, PLP_MCHAN_2D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 }
@@ -588,7 +588,7 @@ static inline int plp_mchan_extToL1_2d_irq(unsigned int loc, mchan_ext_t ext, un
 static inline int plp_cl_mchan_extToL1_2d_irq(unsigned int loc, mchan_ext_t ext, unsigned short size, unsigned short stride, unsigned short length) {
 #ifdef ARCHI_HAS_DMA_DEMUX
   unsigned int counter = plp_cl_mchan_counter_alloc();
-  unsigned int cmd = plp_cl_mchan_getCmd(PLP_DMA_EXT2LOC, size, PLP_DMA_2D, PLP_DMA_NO_TRIG_EVT, PLP_DMA_TRIG_IRQ, PLP_DMA_SHARED);
+  unsigned int cmd = plp_cl_mchan_getCmd(PLP_MCHAN_EXT2LOC, size, PLP_MCHAN_2D, PLP_MCHAN_NO_TRIG_EVT, PLP_MCHAN_TRIG_IRQ, PLP_MCHAN_SHARED);
   plp_cl_mchan_cmd_push_2d(cmd, loc, ext, stride, length);
   return counter;
 #else // ARCHI_HAS_DMA_DEMUX
