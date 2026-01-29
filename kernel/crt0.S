@@ -32,10 +32,12 @@ pos_init_entry:
   # the L1 and jump to cluster_entry_stub
 #if PULP_CHIP == CHIP_CARFIELD
     li t0, 0x5003FFF0
+#elif PULP_CHIP == OPENTITAN_CLUSTER
+    li t0, 0xB0000000
 #elif PULP_CHIP == CHIP_ASTRAL
     li t0, 0x5003FFF0
 #else
-    li t0, 0xB0000000
+    li t0, 0x10000000
 #endif
     sw x0, 0(t0)
     # We check if the offset of the core is zero, so that even if the cluster
@@ -87,10 +89,12 @@ pos_init_entry:
     andi    a1, a0, 0x1f
 #if PULP_CHIP == CHIP_CARFIELD
     li t0, 0x5003FFF0
+#elif PULP_CHIP == OPENTITAN_CLUSTER
+    li t0, 0xB0000000
 #elif PULP_CHIP == CHIP_ASTRAL
     li t0, 0x5003FFF0
 #else
-    li t0, 0xB0000000
+    li t0, 0x10000000
 #endif
     li t1, 0x1
     sw t1, 0(t0)
