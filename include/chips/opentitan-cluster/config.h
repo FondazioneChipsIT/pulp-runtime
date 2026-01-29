@@ -19,7 +19,7 @@
 
 #include "archi/pulp_defs.h"
 
-#define PULP_CHIP CHIP_PULP
+#define PULP_CHIP OPENTITAN_CLUSTER
 #define PULP_CHIP_FAMILY CHIP_PULP
 #define CONFIG_PULP 1
 #define PULP_CHIP_STR opentitan-cluster

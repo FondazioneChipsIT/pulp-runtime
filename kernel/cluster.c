@@ -65,9 +65,6 @@ void cluster_entry_stub()
 
     if (hal_core_id() == 0)
     {
-        // Raise EOC
-        eoc = (int *) 0xB0200000;
-        *eoc = 0x1;
         cluster_retval = retval;
         cluster_running = 0;
         #ifdef ARCHI_NO_FC

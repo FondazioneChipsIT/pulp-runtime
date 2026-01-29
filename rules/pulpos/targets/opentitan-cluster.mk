@@ -88,21 +88,3 @@ QUESTA ?= questa-2023.4-zr
 else
 QUESTA ?=
 endif
-
-ifndef gui
-vsim-flags = -c
-endif
-
-run:
-ifdef gui
-	$(QUESTA) vsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); source $(VSIM_PATH)/scripts/start.tcl"
-else
-	$(QUESTA) vsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); source $(VSIM_PATH)/scripts/run_and_exit.tcl"
-endif
-
-run_qone:
-ifdef gui
-	$(QUESTA) qsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); set USE_QONE 1; source $(VSIM_PATH)/scripts/start.tcl"
-else
-	$(QUESTA) qsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); set USE_QONE 1; source $(VSIM_PATH)/scripts/run_and_exit.tcl"
-endif
