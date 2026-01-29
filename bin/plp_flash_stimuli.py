@@ -77,7 +77,7 @@ class Binary(object):
 
 class FlashImage(object):
 
-    def __init__(self, raw=None, stimuli=None, verbose=True, archi=None, encrypt=False, aesKey=None, aesIv=None, flashType='spi', qpi=True):
+    def __init__(self, raw=None, stimuli=None, chipconfig='pulp_cluster', verbose=True, archi=None, encrypt=False, aesKey=None, aesIv=None, flashType='spi', qpi=True):
 
         self.bootBinary = None
         self.raw = raw
@@ -87,7 +87,8 @@ class FlashImage(object):
         self.flashOffset = 0
         if flashType == 'hyper': self.blockSize = 1024
         else: self.blockSize = 4096
-        self.bootaddr = 0xa0000000
+        if chipconfig == 'opentitan-cluster': self.bootaddr = 0xa0000000
+        else: self.bootaddr = 0x1c000000
         self.verbose = verbose
         self.archi = archi
         self.encrypt = encrypt

@@ -21,6 +21,7 @@ class bcolors:
 
 parser = argparse.ArgumentParser(description='Build flash image for Pulp')
 
+parser.add_argument("--chipconfig", dest="chipconfig", default='pulp_cluster', help="Selected chip")
 parser.add_argument("--flash-boot-binary", dest="flashBootBinary", default=None, help="Boot from flash")
 parser.add_argument("--elf-loader", dest="elfLoader", default=None, help="Boot using the specified ELF loader")
 parser.add_argument("--binary", dest="binary", default=None, help="Resident binary")
@@ -50,7 +51,7 @@ def getFilesFromDir(path, rec=False, incDirInName=True):
         return files
 
 
-flashImage = plp_flash_stimuli.FlashImage(raw=args.raw, stimuli=args.stimuli, verbose=args.verbose, archi=args.archi, encrypt=args.encrypt, aesKey=args.aesKey, aesIv=args.aesIv, flashType=args.flashType, qpi=args.qpi)
+flashImage = plp_flash_stimuli.FlashImage(raw=args.raw, chipconfig=args.chipconfig, stimuli=args.stimuli, verbose=args.verbose, archi=args.archi, encrypt=args.encrypt, aesKey=args.aesKey, aesIv=args.aesIv, flashType=args.flashType, qpi=args.qpi)
 
 
 #
