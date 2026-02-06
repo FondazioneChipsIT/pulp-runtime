@@ -20,6 +20,8 @@
 
 #define ARCHI_HAS_DMA_DEMUX 1
 
+#define ARCHI_HAS_MAILBOXES 1
+
 /*
  * FPGA
  */

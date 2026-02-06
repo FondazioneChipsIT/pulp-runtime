@@ -52,5 +52,6 @@
 #include "archi/hmr/hmr_v1.h"
 #include "archi/tcdm_scrubber/tcdm_scrubber.h"
 #include "archi/hwpe_hci_ecc/hwpe_hci_ecc.h"
+#include "archi/mailboxes/mailboxes.h"
 
 #endif

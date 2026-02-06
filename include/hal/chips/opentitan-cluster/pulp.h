@@ -48,4 +48,6 @@
 
 #include "hal/dma/idma_v2.h"
 
+#include "hal/mailboxes/mailboxes.h"
+
 #endif
