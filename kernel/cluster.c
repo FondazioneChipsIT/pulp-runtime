@@ -68,6 +68,10 @@ void cluster_entry_stub()
         #ifdef ARCHI_NO_FC
         hal_cluster_ctrl_return_set_remote(hal_cluster_id(), cluster_retval);
         hal_cluster_ctrl_eoc_set_remote(hal_cluster_id(), 1);
+        #ifdef ARCHI_HAS_MAILBOXES
+        hal_mailboxes_return_set(cluster_retval);
+        hal_mailboxes_eoc_set(1);
+        #endif
         exit(cluster_retval);
         #endif
     }
