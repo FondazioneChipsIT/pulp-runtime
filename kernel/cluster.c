@@ -69,8 +69,8 @@ void cluster_entry_stub()
         hal_cluster_ctrl_return_set_remote(hal_cluster_id(), cluster_retval);
         hal_cluster_ctrl_eoc_set_remote(hal_cluster_id(), 1);
         #ifdef ARCHI_HAS_MAILBOXES
-        hal_mailboxes_return_set(cluster_retval);
-        hal_mailboxes_eoc_set(1);
+        hal_write_to_mailbox(ARCHI_MAILBOXES_RETURN, cluster_retval);
+        hal_mailboxes_ring_doorbell();
         #endif
         exit(cluster_retval);
         #endif

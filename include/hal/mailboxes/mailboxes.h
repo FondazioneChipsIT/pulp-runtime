@@ -17,12 +17,12 @@
 #ifndef __HAL_MAILBOXES_H__
 #define __HAL_MAILBOXES_H__
 
-static inline void hal_mailboxes_eoc_set(int value) {
-  pulp_write32(ARCHI_SOC_MAILBOXES_ADDR+ARCHI_MAILBOXES_EOC, value);
+static inline void hal_mailboxes_ring_doorbell() {
+  pulp_write32(ARCHI_SOC_MAILBOXES_ADDR+ARCHI_MAILBOXES_DOORBELL, 1);
 }
 
-static inline void hal_mailboxes_return_set(int value){
-  pulp_write32(ARCHI_SOC_MAILBOXES_ADDR+ARCHI_MAILBOXES_RETURN, value);
+static inline void hal_write_to_mailbox(int offset, int value){
+  pulp_write32(ARCHI_SOC_MAILBOXES_ADDR+offset, value);
 }
 
 #endif
