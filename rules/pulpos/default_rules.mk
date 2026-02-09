@@ -348,6 +348,8 @@ endif
 endif
 
 ifeq '$(platform)' 'fpga'
+all: $(TARGETS)
+
 run:
 	$(PULPRT_HOME)/bin/elf_run_genesys2.sh $(TARGETS)
 endif

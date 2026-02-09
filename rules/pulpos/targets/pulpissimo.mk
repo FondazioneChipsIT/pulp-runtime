@@ -91,6 +91,8 @@ include $(PULPRT_HOME)/rules/pulpos/configs/default.mk
 
 ifeq '$(platform)' 'fpga'
 CONFIG_IO_UART=1
+PULP_SRCS += drivers/pulpissimo/rtl_sim/io_mux/src/io_mux.c
+PULP_CFLAGS += -I$(PULPRT_HOME)/drivers/pulpissimo/rtl_sim/io_mux/include
 endif
 
 include $(PULPRT_HOME)/rules/pulpos/default_rules.mk
