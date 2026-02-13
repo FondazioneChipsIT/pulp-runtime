@@ -34,8 +34,10 @@ pos_init_entry:
     li t0, 0x5003FFF0
 #elif PULP_CHIP == CHIP_ASTRAL
     li t0, 0x5003FFF0
+#elif PULP_CHIP == CHIP_SCARV
+    li t0, 0xB003FFFC
 #else
-    li t0, 0xB0000000
+    li t0, 0x1003FFF0
 #endif
     sw x0, 0(t0)
     # We check if the offset of the core is zero, so that even if the cluster
@@ -89,8 +91,10 @@ pos_init_entry:
     li t0, 0x5003FFF0
 #elif PULP_CHIP == CHIP_ASTRAL
     li t0, 0x5003FFF0
+#elif PULP_CHIP == CHIP_SCARV
+    li t0, 0xB003FFFC
 #else
-    li t0, 0xB0000000
+    li t0, 0x1003FFF0
 #endif
     li t1, 0x1
     sw t1, 0(t0)
