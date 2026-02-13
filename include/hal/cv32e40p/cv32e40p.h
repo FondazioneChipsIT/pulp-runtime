@@ -146,6 +146,8 @@ static inline unsigned int cluster_id() {
   return (hart_id >> 6);
 #elif PULP_CHIP == CHIP_ASTRAL
   return (hart_id >> 6);
+#elif PULP_CHIP == CHIP_SCARV
+  return (hart_id >> 6);
 #else
   return (hart_id >> 5) & 0x3f;
 #endif
@@ -197,6 +199,8 @@ static inline __attribute__((always_inline)) unsigned int hal_cluster_id() {
 #if PULP_CHIP == CHIP_CARFIELD
   return (hart_id >> 6);
 #elif PULP_CHIP == CHIP_ASTRAL
+  return (hart_id >> 6);
+#elif PULP_CHIP == CHIP_SCARV
   return (hart_id >> 6);
 #else
   return (hart_id >> 5) & 0x3f;
