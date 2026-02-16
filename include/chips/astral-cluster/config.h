@@ -20,7 +20,7 @@
 #include "archi/pulp_defs.h"
 
 #define PULP_CHIP CHIP_ASTRAL
-#define PULP_CHIP_FAMILY CHIP_ASTRAL
+#define PULP_CHIP_FAMILY CHIP_CARFIELD
 #define CONFIG_PULP 1
 #define PULP_CHIP_STR astral-cluster
 #define PULP_CHIP_FAMILY_STR astral-cluster
