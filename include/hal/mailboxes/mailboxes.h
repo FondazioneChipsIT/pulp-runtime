@@ -17,12 +17,27 @@
 #ifndef __HAL_MAILBOXES_H__
 #define __HAL_MAILBOXES_H__
 
-static inline void hal_mailboxes_ring_doorbell() {
-  pulp_write32(ARCHI_SOC_MAILBOXES_ADDR+ARCHI_MAILBOXES_DOORBELL, 1);
-}
 
 static inline void hal_write_to_mailbox(int offset, int value){
-  pulp_write32(ARCHI_SOC_MAILBOXES_ADDR+offset, value);
+  pulp_write32(ARCHI_SOC_MAILBOXES_ADDR+ARCHI_SOC_MAILBOX_OFFSET+offset, value);
 }
+
+static inline void hal_mailboxes_ring_doorbell() {
+#ifdef NO_STANDALONE
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_SND_SET_OFFSET, 1);
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_SND_EN_OFFSET, 1);
+#else
+  hal_write_to_mailbox(ARCHI_MAILBOXES_DOORBELL, 1);
+#endif
+}
+
+static inline void hal_mailboxes_write_return_value(int value) {
+#ifdef NO_STANDALONE
+  hal_write_to_mailbox(ARCHI_MAILBOX_LETTER0_OFFSET, value);
+#else
+  hal_write_to_mailbox(ARCHI_MAILBOXES_RETURN, value);
+#endif
+}
+
 
 #endif
