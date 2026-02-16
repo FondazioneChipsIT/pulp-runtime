@@ -67,6 +67,11 @@ ifdef NO_ECC
 PULP_CFLAGS += -DNO_ECC
 endif
 
+# STANDALONE
+ifdef NO_STANDALONE
+PULP_CFLAGS += -DNO_STANDALONE
+endif
+
 
 include $(PULPRT_HOME)/rules/pulpos/configs/default.mk
 
