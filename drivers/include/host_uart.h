@@ -28,15 +28,3 @@
 #define UART_LINE_STATUS_DATA_READY_BIT 0
 #define UART_LINE_STATUS_THR_EMPTY_BIT 5
 #define UART_LINE_STATUS_TMIT_EMPTY_BIT 6
-
-int uart_read_ready(void *uart_base);
-
-void uart_write(void *uart_base, uint8_t byte);
-
-void uart_write_str(void *uart_base, void *src, uint64_t len);
-
-void uart_write_flush(void *uart_base);
-
-uint8_t uart_read(void *uart_base);
-
-void uart_read_str(void *uart_base, void *dst, uint64_t len);
