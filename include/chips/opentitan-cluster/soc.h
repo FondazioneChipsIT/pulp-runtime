@@ -14,15 +14,34 @@
  * limitations under the License.
  */
 
-#ifndef __POS__CHIPS__PULP__CONFIG_H__
-#define __POS__CHIPS__PULP__CONFIG_H__
+#ifndef __POS_CHIPS_PULP_SOC_H__
+#define __POS_CHIPS_PULP_SOC_H__
 
-#include "archi/pulp_defs.h"
 
-#define PULP_CHIP CHIP_ASTRAL
-#define PULP_CHIP_FAMILY CHIP_CARFIELD
-#define CONFIG_PULP 1
-#define PULP_CHIP_STR astral-cluster
-#define PULP_CHIP_FAMILY_STR astral-cluster
+#define POS_FLL_CL 2
+#define POS_FLL_PERIPH 1
+#define POS_FLL_FC 0
+
+extern int pos_freq_domains[PI_FREQ_NB_DOMAINS];
+
+
+void pos_soc_init();
+
+static inline int pos_freq_get_fll(int domain)
+{
+    switch (domain)
+    {
+        case PI_FREQ_DOMAIN_FC:
+            return POS_FLL_FC;
+
+        case PI_FREQ_DOMAIN_PERIPH:
+            return POS_FLL_PERIPH;
+
+        case PI_FREQ_DOMAIN_CL:
+        default:
+            return POS_FLL_CL;
+    }
+}
+
 
 #endif

@@ -86,9 +86,7 @@ static inline unsigned int cluster_id() {
   int hart_id;
   asm("csrr %0, 0xF14" : "=r" (hart_id) : );
   // in PULP the hart id is {22'b0, cluster_id, core_id}
-#if PULP_CHIP == CHIP_CARFIELD
-  return (hart_id >> 6);
-#elif PULP_CHIP == CHIP_ASTRAL
+#if PULP_CHIP_FAMILY == CHIP_CARFIELD
   return (hart_id >> 6);
 #else
   return (hart_id >> 5) & 0x3f;

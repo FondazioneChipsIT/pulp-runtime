@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-#ifndef __POS__CHIPS__PULP__CONFIG_H__
-#define __POS__CHIPS__PULP__CONFIG_H__
+#include "pulp.h"
 
-#include "archi/pulp_defs.h"
+void pos_soc_init()
+{
 
-#define PULP_CHIP CHIP_ASTRAL
-#define PULP_CHIP_FAMILY CHIP_CARFIELD
-#define CONFIG_PULP 1
-#define PULP_CHIP_STR astral-cluster
-#define PULP_CHIP_FAMILY_STR astral-cluster
+  pos_freq_domains[PI_FREQ_DOMAIN_FC] = ARCHI_FPGA_SOC_FREQUENCY;
 
-#endif
+  pos_freq_domains[PI_FREQ_DOMAIN_PERIPH] = ARCHI_FPGA_PER_FREQUENCY;
+
+  pos_freq_domains[PI_FREQ_DOMAIN_CL] = ARCHI_FPGA_CL_FREQUENCY;
+
+}

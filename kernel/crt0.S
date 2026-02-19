@@ -34,6 +34,8 @@ pos_init_entry:
     li t0, 0x5003FFF0
 #elif PULP_CHIP == CHIP_ASTRAL
     li t0, 0x5003FFF0
+#elif PULP_CHIP == CHIP_SCARV
+    li t0, 0xB003FFFC
 #else
     li t0, 0x1003FFF0
 #endif
@@ -42,7 +44,7 @@ pos_init_entry:
     # ID is not zero, the execution does not break here
     andi    a2, a0, 0x0f
     bnez    a2, sync_loop
-#else   
+#else
     srli    a0, a0, 5
 #ifdef ARCHI_CL_BOOT
 
@@ -89,6 +91,8 @@ pos_init_entry:
     li t0, 0x5003FFF0
 #elif PULP_CHIP == CHIP_ASTRAL
     li t0, 0x5003FFF0
+#elif PULP_CHIP == CHIP_SCARV
+    li t0, 0xB003FFFC
 #else
     li t0, 0x1003FFF0
 #endif
