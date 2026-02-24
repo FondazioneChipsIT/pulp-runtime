@@ -75,8 +75,8 @@ static inline void plp_ctrl_cluster_cfg_set(unsigned int mask) {
   pulp_write32(ARCHI_CLUSTER_CTRL_ADDR + ARCHI_CLUSTER_CTRL_CLUSTER_CFG, mask);
 }
 
-static inline void plp_ctrl_cluster_cfg_get() {
-  return pulp_read32(ARCHI_CLUSTER_CTRL_ADDR + ARCHI_CLUSTER_CTRL_CLUSTER_CFG, mask);
+static inline int plp_ctrl_cluster_cfg_get() {
+  return pulp_read32(ARCHI_CLUSTER_CTRL_ADDR + ARCHI_CLUSTER_CTRL_CLUSTER_CFG);
 }
 
 #endif

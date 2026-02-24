@@ -477,6 +477,19 @@ static inline unsigned int plp_cl_dma_status_toL1();
 static inline unsigned int plp_dma_status_toL2();
 static inline unsigned int plp_cl_dma_status_toL2();
 
+/* CLOCK GATING PROCEDURE FOR iDMA */
+/*  Three modes are supported:
+    - No clock: the whole iDMA is unresponsive
+    - Frontend-only clock: only the iDMA frontend is clocked. This way power consumption
+      is kept to a minimum while still being responsive to incoming transfer requests.
+    - Fully clocked: both the frontend and datapath of iDMA are clocked. Notice that
+      clock gating for the dapath is fully managed in rtl.
+*/
+
+// Enables the frontend clock
+static inline void plp_idma_enable_clk();
+// Disables the frontend clock
+static inline void plp_idma_disable_clk();
 
 //!@}
 
@@ -510,6 +523,22 @@ static inline unsigned int plp_cl_dma_status_toL2();
 #define DMA_CL_WRITE(value, offset) DMA_WRITE(value, offset)
 #define DMA_CL_READ(offset) DMA_READ(offset)
 #endif
+
+//
+// CLOCK GATING CONTROL
+//
+
+static inline void plp_idma_enable_clk() {
+  uint32_t cluster_ctrl_cfg_reg;
+  cluster_ctrl_cfg_reg = plp_ctrl_cluster_cfg_get();
+  plp_ctrl_cluster_cfg_set(cluster_ctrl_cfg_reg | (1 << 17));
+}
+
+static inline void plp_idma_disable_clk() {
+  uint32_t cluster_ctrl_cfg_reg;
+  cluster_ctrl_cfg_reg = plp_ctrl_cluster_cfg_get();
+  plp_ctrl_cluster_cfg_set(cluster_ctrl_cfg_reg & (0 << 17));
+}
 
 static inline int plp_dma_memcpy(dma_ext_t ext, unsigned int loc, unsigned short size, int ext2loc) {
   if (ext2loc)
@@ -784,7 +813,6 @@ static inline int pulp_cl_idma_L2ToL1(unsigned int src, unsigned int dst, unsign
   asm volatile("" : : : "memory");
   // Launch TX
   dma_tx_id = DMA_CL_READ(IDMA_REG32_3D_NEXT_ID_1_REG_OFFSET);
-
   return dma_tx_id;
 }
 
@@ -1095,6 +1123,10 @@ static inline int pulp_cl_idma_zeromem(unsigned int dst, unsigned short size, id
   asm volatile("" : : : "memory");
   return dma_tx_id;
 }
+
+//
+// BARRIERS
+//
 
 
 static inline void plp_dma_barrier() {
