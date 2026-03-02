@@ -100,3 +100,5 @@ endif
 
 link_design_file:
 	ln -sf $(VSIM_PATH)/design.bin design.bin
+	@if grep -q " Test not passed" $(TARGET_BUILD_DIR)/../transcript; then exit 1; fi
+endif
