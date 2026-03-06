@@ -22,9 +22,26 @@ static inline void hal_write_to_mailbox(int offset, int value){
   pulp_write32(ARCHI_SOC_MAILBOXES_ADDR+ARCHI_SOC_MAILBOX_OFFSET+offset, value);
 }
 
-static inline void hal_mailboxes_ring_doorbell() {
+static inline void hal_mailboxes_ring_doorbell_snd() {
   hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_SND_SET_OFFSET, 1);
   hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_SND_EN_OFFSET, 1);
+}
+
+static inline void hal_mailboxes_ring_doorbell_rcv() {
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_SET_OFFSET, 1);
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_EN_OFFSET, 1);
+}
+
+static inline void hal_mailboxes_clear_doorbell_snd() {
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_SND_SET_OFFSET, 0);
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_SND_EN_OFFSET, 0);
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_SND_CLR_OFFSET, 1);
+}
+
+static inline void hal_mailboxes_clear_doorbell_rcv() {
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_SET_OFFSET, 0);
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_EN_OFFSET, 0);
+  hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_CLR_OFFSET, 1);
 }
 
 static inline void hal_mailboxes_write_return_value(int value) {
