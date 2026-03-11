@@ -45,18 +45,20 @@ static unsigned int pos_irq_get_itvec(unsigned int ItBaseAddr, unsigned int ItIn
 
 void rt_irq_set_handler(int irq, void (*handler)())
 {
-#if defined(__RISCV_GENERIC__)
-  if (irq < 16)
-    return;
+// #if defined(__RISCV_GENERIC__)
+//   if (irq < 16)
+//     return;
 
-  irq -= 16;
-#endif
+//   irq -= 16;
+// #endif
 
   unsigned int base = rt_irq_get_fc_vector_base();
 
   unsigned int jmpAddr = base + 0x4 * irq;
 
   *(volatile unsigned int *)jmpAddr = pos_irq_get_itvec(base, irq, (unsigned int)handler);
+
+  flush_all_icache_banks();
 
   //selective_flush_icache_addr(jmpAddr & ~(ICACHE_LINE_SIZE-1));
 

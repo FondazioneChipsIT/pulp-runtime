@@ -77,6 +77,12 @@ pos_init_entry:
     # Stack initialization
     la   x2, stack
 
+#ifdef __RISCV_GENERIC__
+    # Set trap vector
+    la t0, __irq_vector_base
+    ori t0, t0, 0x1
+    csrrw x0, mtvec, t0
+#endif
 
 
     /* Do all other initializations from C code */

@@ -138,7 +138,7 @@ static inline void rt_irq_set_fc_vector_base(unsigned int base)
     if (hal_is_fc())
     {
 #if defined(__RISCV_GENERIC__)
-        hal_spr_write(0x305, base);
+        hal_spr_write(0x305, base | 1);
 #elif defined(ARCHI_CORE_HAS_SECURITY)
         hal_spr_write(SR_MTVEC, base);
 #elif defined(ARCHI_CORE_HAS_1_10)
@@ -151,7 +151,7 @@ static inline void rt_irq_set_fc_vector_base(unsigned int base)
     {
 #if defined(ARCHI_HAS_CLUSTER)
 #if defined(__RISCV_GENERIC__)
-        hal_spr_write(0x305, base);
+        hal_spr_write(0x305, base | 1);
 #elif defined(ARCHI_CORE_HAS_1_10)
         hal_spr_write(SR_MTVEC, base | 1);
 #elif defined(ARCHI_CLUSTER_CTRL_ADDR)
