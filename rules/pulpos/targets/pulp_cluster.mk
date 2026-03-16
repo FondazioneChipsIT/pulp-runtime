@@ -7,8 +7,8 @@ PULP_ARCH_OBJDFLAGS ?= -Mmarch=rv32imc
 else ifdef USE_CV32E40P
 PULP_LDFLAGS +=
 PULP_CFLAGS += -D__cv32e40p__ -U__riscv__
-PULP_ARCH_CFLAGS ?=  -march=rv32imfc_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd_xcvelw  -mabi=ilp32f
-PULP_ARCH_LDFLAGS ?=  -march=rv32imfc_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd_xcvelw  -mabi=ilp32f
+PULP_ARCH_CFLAGS ?=  -march=rv32imfc_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd_xcvelw_zfhmin  -mabi=ilp32f
+PULP_ARCH_LDFLAGS ?=  -march=rv32imfc_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd_xcvelw_zfhmin  -mabi=ilp32f
 PULP_ARCH_OBJDFLAGS ?=
 else
 PULP_LDFLAGS      += 
