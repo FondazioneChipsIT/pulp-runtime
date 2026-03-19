@@ -391,12 +391,31 @@ void __attribute__((naked)) pos_hmr_synch() {
   : : : "memory");
 
   // enter barrier -> this should lock the cores together
-  __asm__ __volatile__( // ra is barrier id
-    "sll t1, ra, " QU(EU_BARRIER_SIZE_LOG2) " \n\t"
-    "li t2, " QU(ARCHI_EU_DEMUX_ADDR + EU_BARRIER_DEMUX_OFFSET) " \n\t"
-    "add t1, t1, t2 \n\t" // t1 is tmr base address
-    "p.elw zero, " QU(EU_HW_BARR_TRIGGER_WAIT_CLEAR) "(t1) \n\t" // barrier
-  : : : "memory");
+__asm__ __volatile__( // ra is barrier id
+
+  // compute barrier address
+  "sll  t1, ra, " QU(EU_BARRIER_SIZE_LOG2) "        \n\t"
+  "li   t2, " QU(ARCHI_EU_DEMUX_ADDR + EU_BARRIER_DEMUX_OFFSET) " \n\t"
+  "add  t1, t1, t2                                \n\t"
+
+  // read current PC into t0
+  "auipc t0, 0                                    \n\t"
+  // read core ID into t3
+  "csrr t3, 0xf14 \n\t" // Read core id
+
+  // compute per-core address
+  "li   t4, 0x10200040                             \n\t" // base address
+  "slli t5, t3, 2                                 \n\t" // offset = core_id * 4
+  "add  t4, t4, t5                                \n\t"
+
+  // store PC
+  "sw   t0, 0(t4)                                 \n\t"
+
+  // barrier wait
+  "p.elw zero, " QU(EU_HW_BARR_TRIGGER_WAIT_CLEAR) "(t1) \n\t"
+:
+:
+: "t0","t1","t2","t3","t4","t5","memory");
 
   // several nops to delay and allow for core reset
   __asm__ __volatile__(
