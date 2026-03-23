@@ -111,7 +111,7 @@ static inline void hmr_set_dmr_config_all(unsigned int cid, bool rapid_recovery,
     (rapid_recovery   ? 1<<HMR_REGISTERS_DMR_CONFIG_RAPID_RECOVERY_BIT    : 0) |
     (setback          ? 1<<HMR_REGISTERS_DMR_CONFIG_SETBACK_BIT           : 0) |
     (synch_req        ? 1<<HMR_REGISTERS_DMR_CONFIG_SYNCH_REQ_BIT         : 0));
-  pulp_write32(ARCHI_HMR_ADDR + HMR_DMR_OFFSET + HMR_DMR_INCREMENT*core_id() + HMR_DMR_REGS_DMR_TIMING_DIVERSITY_OFFSET, 1<<HMR_REGISTERS_DMR_CONFIG_TIMING_DIVERSITY_BIT);
+  pulp_write32(ARCHI_HMR_ADDR + HMR_DMR_OFFSET + HMR_DMR_INCREMENT*core_id() + HMR_DMR_REGS_DMR_TIMING_DIVERSITY_OFFSET, (timing_diversity ? 1<<HMR_REGISTERS_DMR_CONFIG_TIMING_DIVERSITY_BIT : 0));
 
 }
 
