@@ -404,7 +404,7 @@ __asm__ __volatile__( // ra is barrier id
   "csrr t3, 0xf14 \n\t" // Read core id
 
   // compute per-core address
-  "li   t4, 0x10200040                             \n\t" // base address
+  "li   t4,"QU(ARCHI_CLUSTER_CTRL_ADDR+0x40)"     \n\t" // base address
   "slli t5, t3, 2                                 \n\t" // offset = core_id * 4
   "add  t4, t4, t5                                \n\t"
 
