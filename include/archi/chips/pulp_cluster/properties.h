@@ -24,6 +24,9 @@
 
 #define ARCHI_HAS_DMA_DEMUX 1
 
+#define ARCHI_HMR_NO_RAPID_RECOVERY 1
+#define HMR_IN_INTERLEAVED 1
+
 /*
  * FPGA
  */
