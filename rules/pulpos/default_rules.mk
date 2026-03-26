@@ -277,7 +277,7 @@ pulp_nn:
 	rm -rf build && \
 	mkdir build && cd build && \
 	cmake .. -DCMAKE_TOOLCHAIN_FILE=riscv-pulp.cmake && \
-	make pulp-nn-mixed
+	make pulp-nn-mixed -j16
 
 .PHONY:clean
 clean:
