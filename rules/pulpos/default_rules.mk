@@ -272,6 +272,13 @@ build: all
 
 all: $(TARGETS)
 
+pulp_nn:
+	cd $(PULPRT_HOME)/../pulp-nn-mixed && \
+	rm -rf build && \
+	mkdir build && cd build && \
+	cmake .. -DCMAKE_TOOLCHAIN_FILE=riscv-pulp.cmake && \
+	make pulp-nn-mixed
+
 .PHONY:clean
 clean:
 	@echo "RM  $(TARGET_BUILD_DIR)"
