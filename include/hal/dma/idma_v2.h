@@ -1130,4 +1130,26 @@ static inline void plp_cl_dma_barrier_toL2() {
   }
 }
 
+// DEEPLOY DRIVERS
+
+static inline void pulp_idma_transfer_1d_and_wait(unsigned int direction, unsigned int ext, unsigned int loc, unsigned short size) {
+  if (direction == 1) {
+    pulp_cl_idma_L2ToL1(ext, loc, size);
+    plp_cl_dma_barrier_toL1();
+  } else {
+    pulp_cl_idma_L1ToL2(loc, ext, size);
+    plp_cl_dma_barrier_toL2();
+  }
+}
+
+static inline void pulp_idma_transfer_2d_and_wait(unsigned int direction, unsigned int ext, unsigned int loc, unsigned short size, unsigned int stride_ext, unsigned int stride_loc, unsigned int num_reps) {
+  if (direction == 1) {
+    pulp_cl_idma_L2ToL1_2d(ext, loc, size, stride_ext, stride_loc, num_reps);
+    plp_cl_dma_barrier_toL1();
+  } else {
+    pulp_cl_idma_L1ToL2_2d(loc, ext, size, stride_loc, stride_ext, num_reps);
+    plp_cl_dma_barrier_toL2();
+  }
+}
+
 #endif // __HAL_IDMA_V1_H__
