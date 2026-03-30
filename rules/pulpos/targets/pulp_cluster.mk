@@ -89,7 +89,9 @@ ifdef gui
 	$(QUESTA) vsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); source $(VSIM_PATH)/scripts/start.tcl"
 else
 	$(QUESTA) vsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); source $(VSIM_PATH)/scripts/run_and_exit.tcl"
+	@if grep -q " Test not passed" $(TARGET_BUILD_DIR)/../transcript; then exit 1; fi
 endif
+
 
 run_qone: link_design_file
 ifdef gui
@@ -100,5 +102,4 @@ endif
 
 link_design_file:
 	ln -sf $(VSIM_PATH)/design.bin design.bin
-	@if grep -q " Test not passed" $(TARGET_BUILD_DIR)/../transcript; then exit 1; fi
-endif
+
