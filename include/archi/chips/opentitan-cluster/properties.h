@@ -22,6 +22,8 @@
 
 #define ARCHI_HAS_MAILBOXES 1
 
+#define ARCHI_HMR_NO_RAPID_RECOVERY 1
+
 /*
  * FPGA
  */
