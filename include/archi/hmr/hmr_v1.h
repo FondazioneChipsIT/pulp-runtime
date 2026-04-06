@@ -82,6 +82,7 @@ extern "C" {
 #define HMR_REGISTERS_DMR_CONFIG_FORCE_RECOVERY_BIT 1
 #define HMR_REGISTERS_DMR_CONFIG_SETBACK_BIT 2
 #define HMR_REGISTERS_DMR_CONFIG_SYNCH_REQ_BIT 3
+#define HMR_REGISTERS_DMR_CONFIG_TIMING_DIVERSITY_BIT 4
 
 // TMR configuration bits.
 #define HMR_REGISTERS_TMR_CONFIG_REG_OFFSET 0x14
@@ -151,6 +152,9 @@ extern "C" {
 
 // Address for the last checkpoint.
 #define HMR_DMR_REGS_CHECKPOINT_ADDR_REG_OFFSET 0x8
+
+// DMR Timing Diversity
+#define HMR_DMR_REGS_DMR_TIMING_DIVERSITY_OFFSET 0xc
 
 #ifdef __cplusplus
 }  // extern "C"
