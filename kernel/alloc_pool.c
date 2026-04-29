@@ -15,6 +15,7 @@
  */
 
 #include "pulp.h"
+#include "implem/trace.h"
 #include <string.h>
 #include <stdio.h>
 
