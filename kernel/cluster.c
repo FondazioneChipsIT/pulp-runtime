@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 volatile void *cluster_entry;
 
 L1_DATA char *cluster_stacks;
@@ -26,12 +27,24 @@ L1_DATA char *cluster_stacks;
 static volatile int cluster_running;
 static volatile int cluster_retval;
 
-
 static void pos_wait_forever()
 {
-    eu_evt_maskClr(0xffffffff);
-    eu_evt_wait();
-    while(1);
+    // 
+    #ifdef ARCHI_HAS_MAILBOXES
+        eu_evt_maskWaitAndClr(1u << 22);
+        // Clear the receive-side mailbox IRQ after the wakeup event is consumed.
+        if(hal_core_id() == 0){
+            hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_CLR_OFFSET, 0x1);
+        }
+        synch_barrier();
+        cluster_entry_stub();
+    #else
+        eu_evt_maskClr(0xffffffff);
+        eu_evt_wait();
+        while (1);
+    #endif
+    
+
 }
 
 
@@ -57,9 +70,16 @@ void cluster_entry_stub()
 {
     cluster_core_init();
 
+    if (hal_core_id() == 0) {
+        // LETTER0 carries the entry-control token before execution. If it
+        // requests a reload, LETTER1 provides the next cluster entry point.
+        if (hal_mailboxes_read_letter0() == ARCHI_MAILBOX_ENTRY_LOAD)
+            cluster_entry = (void *)(uintptr_t)hal_mailboxes_read_letter1();
+    }
+
     synch_barrier();
     int retval = ((int (*)())cluster_entry)();
-    synch_barrier();
+    // synch_barrier();
 
     if (hal_core_id() == 0)
     {
@@ -69,12 +89,15 @@ void cluster_entry_stub()
         hal_cluster_ctrl_return_set_remote(hal_cluster_id(), cluster_retval);
         hal_cluster_ctrl_eoc_set_remote(hal_cluster_id(), 1);
         #ifdef ARCHI_HAS_MAILBOXES
+        // After execution, LETTER0 is repurposed to report core 0's return
+        // value back to the OT side before ringing the completion doorbell.
         hal_mailboxes_write_return_value(cluster_retval);
         hal_mailboxes_ring_doorbell();
         #endif
-        exit(cluster_retval);
         #endif
     }
+    synch_barrier();
+
 
     pos_wait_forever();
 }

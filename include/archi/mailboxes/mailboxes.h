@@ -28,4 +28,10 @@
 #define ARCHI_MAILBOX_LETTER0_OFFSET        0x80
 #define ARCHI_MAILBOX_LETTER1_OFFSET        0x84
 
+// Cluster runtime entry-control protocol carried in mailbox letters.
+// LETTER0 selects whether the current entry point is kept or LETTER1 provides a
+// replacement entry point for the next cluster wakeup.
+#define ARCHI_MAILBOX_ENTRY_KEEP            0x0
+#define ARCHI_MAILBOX_ENTRY_LOAD            0x1
+
 #endif
