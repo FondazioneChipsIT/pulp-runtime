@@ -98,5 +98,12 @@ else
 	$(QUESTA) qsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); set USE_QONE 1; source $(VSIM_PATH)/scripts/run_and_exit.tcl"
 endif
 
+run_saif:
+ifdef gui
+	$(QUESTA) vsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); set RUN_SAIF 1; source $(VSIM_PATH)/scripts/start.tcl"
+else
+	$(QUESTA) vsim $(vsim-flags) -do "set  VSIM_PATH $(VSIM_PATH); set  APP $(TARGET_BUILD_DIR)/$(PULP_APP)/$(PULP_APP); set RUN_SAIF 1; source $(VSIM_PATH)/scripts/run_and_exit.tcl"
+endif
+
 link_design_file:
 	ln -sf $(VSIM_PATH)/design.bin design.bin
