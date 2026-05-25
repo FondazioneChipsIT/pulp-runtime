@@ -946,10 +946,6 @@ static inline int pulp_cl_idma_L2ToL1_2d(unsigned int src, unsigned int dst, uns
   return dma_tx_id;
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 004a4d4 ([iDMA] Updates on iDMA drivers)
 static inline int pulp_idma_L1ToL1_2d(unsigned int src, unsigned int dst, unsigned short size, unsigned int src_stride, unsigned int dst_stride, unsigned int num_reps) {
   unsigned int dma_tx_id;
   unsigned int cfg = IDMA_DEFAULT_CONFIG_L1TOL1_2D;
