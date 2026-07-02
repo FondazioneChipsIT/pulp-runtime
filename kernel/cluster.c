@@ -32,10 +32,13 @@ static void pos_wait_forever()
     // 
     #ifdef ARCHI_HAS_MAILBOXES
         eu_evt_maskWaitAndClr(1u << 22);
-        // Clear the receive-side mailbox IRQ after the wakeup event is consumed.
+        
         if(hal_core_id() == 0){
             hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_CLR_OFFSET, 0x1);
         }
+        synch_barrier();
+        // extra clear beacuse Ibex drive it at edge level
+        eu_evt_clr(1u << 22);
         synch_barrier();
         cluster_entry_stub();
     #else
@@ -46,8 +49,6 @@ static void pos_wait_forever()
     
 
 }
-
-
 
 static void cluster_core_init()
 {
@@ -66,16 +67,25 @@ static void cluster_core_init()
 #endif
 }
 
-void cluster_entry_stub()
+void cluster_wait_entry(void)
 {
     cluster_core_init();
+    pos_wait_forever();
+}
 
+
+void cluster_entry_stub()
+{
+    #ifdef ARCHI_HAS_MAILBOXES
     if (hal_core_id() == 0) {
         // LETTER0 carries the entry-control token before execution. If it
         // requests a reload, LETTER1 provides the next cluster entry point.
         if (hal_mailboxes_read_letter0() == ARCHI_MAILBOX_ENTRY_LOAD)
             cluster_entry = (void *)(uintptr_t)hal_mailboxes_read_letter1();
     }
+    #else
+    cluster_core_init();
+    #endif
 
     synch_barrier();
     int retval = ((int (*)())cluster_entry)();

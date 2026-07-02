@@ -202,7 +202,11 @@ pe_start:
     addi a1, a1, 1
     mul  x1, x3, a1
     add  x2, x2, x1
+#if defined(ARCHI_HAS_MAILBOXES)
+    j    cluster_wait_entry
+#else
     j    cluster_entry_stub
+#endif
 #endif
 
 do_cl_boot:
