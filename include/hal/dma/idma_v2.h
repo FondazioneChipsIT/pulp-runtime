@@ -788,6 +788,26 @@ static inline int pulp_cl_idma_L1ToL2(unsigned int src, unsigned int dst, unsign
   return dma_tx_id;
 }
 
+static inline void pulp_cl_idma_L1ToL2_cfg(unsigned int src, unsigned int dst, unsigned short size) {
+  unsigned int dma_tx_id;
+  unsigned int cfg = IDMA_DEFAULT_CONFIG_L1TOL2;
+  DMA_CL_WRITE(src, IDMA_REG32_3D_SRC_ADDR_LOW_REG_OFFSET);
+  DMA_CL_WRITE(dst, IDMA_REG32_3D_DST_ADDR_LOW_REG_OFFSET);
+  DMA_CL_WRITE(size, IDMA_REG32_3D_LENGTH_LOW_REG_OFFSET);
+  DMA_CL_WRITE(cfg, IDMA_REG32_3D_CONF_REG_OFFSET);
+  DMA_CL_WRITE(1, IDMA_REG32_3D_COMMIT_JOB_0_OFFSET);
+
+  asm volatile("" : : : "memory");
+}
+
+static inline int pulp_cl_idma_L1ToL2_launch(){
+  unsigned int dma_tx_id;
+  // Launch TX
+  dma_tx_id = DMA_CL_READ(IDMA_REG32_3D_NEXT_ID_0_REG_OFFSET);
+  return dma_tx_id;
+}
+
+
 static inline int pulp_idma_L2ToL1(unsigned int src, unsigned int dst, unsigned short size) {
   unsigned int dma_tx_id;
   unsigned int cfg = IDMA_DEFAULT_CONFIG_L2TOL1;
@@ -802,6 +822,26 @@ static inline int pulp_idma_L2ToL1(unsigned int src, unsigned int dst, unsigned 
 
   return dma_tx_id;
 }
+
+static inline void pulp_cl_idma_L2ToL1_cfg(unsigned int src, unsigned int dst, unsigned short size) {
+  unsigned int dma_tx_id;
+  unsigned int cfg = IDMA_DEFAULT_CONFIG_L2TOL1;
+  DMA_CL_WRITE(src, IDMA_REG32_3D_SRC_ADDR_LOW_REG_OFFSET);
+  DMA_CL_WRITE(dst, IDMA_REG32_3D_DST_ADDR_LOW_REG_OFFSET);
+  DMA_CL_WRITE(size, IDMA_REG32_3D_LENGTH_LOW_REG_OFFSET);
+  DMA_CL_WRITE(cfg, IDMA_REG32_3D_CONF_REG_OFFSET);
+  DMA_CL_WRITE(1, IDMA_REG32_3D_COMMIT_JOB_1_OFFSET);
+
+  asm volatile("" : : : "memory");
+}
+
+static inline int pulp_cl_idma_L2ToL1_launch(){
+  unsigned int dma_tx_id;
+  // Launch TX
+  dma_tx_id = DMA_CL_READ(IDMA_REG32_3D_NEXT_ID_1_REG_OFFSET);
+  return dma_tx_id;
+}
+
 static inline int pulp_cl_idma_L2ToL1(unsigned int src, unsigned int dst, unsigned short size) {
   unsigned int dma_tx_id;
   unsigned int cfg = IDMA_DEFAULT_CONFIG_L2TOL1;

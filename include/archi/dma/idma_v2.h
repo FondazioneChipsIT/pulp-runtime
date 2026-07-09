@@ -72,6 +72,12 @@ extern "C" {
 // Get ID of finished transactions.
 #define IDMA_REG32_3D_DONE_ID_1_REG_OFFSET 0x18
 
+// Commit a new job on stream 0
+#define IDMA_REG32_3D_COMMIT_JOB_0_OFFSET 0x1c
+
+// Commit a new job on stream 1
+#define IDMA_REG32_3D_COMMIT_JOB_1_OFFSET 0x20
+
 // Low destination address
 #define IDMA_REG32_3D_DST_ADDR_LOW_REG_OFFSET 0xd0
 
