@@ -89,7 +89,9 @@ void cluster_start(int cid, int (*entry)())
     alloc_init_l1(cid);
 
     // Activate icache
+    #ifndef SNITCH_ICACHE
     hal_icache_cluster_enable(cid);
+    #endif
 
     #ifndef ARCHI_NO_FC
     if (!hal_is_fc())
