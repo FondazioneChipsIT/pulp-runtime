@@ -26,15 +26,31 @@ L1_DATA char *cluster_stacks;
 static volatile int cluster_running;
 static volatile int cluster_retval;
 
-
 static void pos_wait_forever()
 {
-    eu_evt_maskClr(0xffffffff);
-    eu_evt_wait();
-    while(1);
+    // 
+    #ifdef ARCHI_HAS_MAILBOXES
+        eu_evt_maskWaitAndClr(1u << 22);
+        
+        if(hal_core_id() == 0) hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_CLR_OFFSET, 0x1);
+        synch_barrier();
+ /*
+ * The interrupt clears the EU, but Ibex only clears its pending
+ * interrupt at the next instruction, which re-triggers the EU.
+ * The CL then skips the barrier at the next pos_wait,
+ * whether or not Ibex triggered it.
+ */
+        eu_evt_clr(1u << 22);
+        synch_barrier();
+        cluster_entry_stub();
+    #else
+        eu_evt_maskClr(0xffffffff);
+        eu_evt_wait();
+        while (1);
+    #endif
+    
+
 }
-
-
 
 static void cluster_core_init()
 {
@@ -53,13 +69,28 @@ static void cluster_core_init()
 #endif
 }
 
-void cluster_entry_stub()
+void cluster_wait_entry(void)
 {
     cluster_core_init();
+    pos_wait_forever();
+}
+
+
+void cluster_entry_stub()
+{
+    #ifdef ARCHI_HAS_MAILBOXES
+    if (hal_core_id() == 0) {
+        // LETTER0 carries the entry-control token before execution. If it
+        // requests a reload, LETTER1 provides the next cluster entry point.
+        if (hal_mailboxes_read_letter0() == ARCHI_MAILBOX_ENTRY_LOAD)
+            cluster_entry = (void *)(uintptr_t)hal_mailboxes_read_letter1();
+    }
+    #else
+    cluster_core_init();
+    #endif
 
     synch_barrier();
     int retval = ((int (*)())cluster_entry)();
-    synch_barrier();
 
     if (hal_core_id() == 0)
     {
@@ -69,12 +100,15 @@ void cluster_entry_stub()
         hal_cluster_ctrl_return_set_remote(hal_cluster_id(), cluster_retval);
         hal_cluster_ctrl_eoc_set_remote(hal_cluster_id(), 1);
         #ifdef ARCHI_HAS_MAILBOXES
+        // After execution, LETTER0 is repurposed to report core 0's return
+        // value back to the OT side before ringing the completion doorbell.
         hal_mailboxes_write_return_value(cluster_retval);
         hal_mailboxes_ring_doorbell();
         #endif
-        exit(cluster_retval);
         #endif
     }
+    synch_barrier();
+
 
     pos_wait_forever();
 }
