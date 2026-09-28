@@ -18,7 +18,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 volatile void *cluster_entry;
 
 L1_DATA char *cluster_stacks;
@@ -33,11 +32,14 @@ static void pos_wait_forever()
     #ifdef ARCHI_HAS_MAILBOXES
         eu_evt_maskWaitAndClr(1u << 22);
         
-        if(hal_core_id() == 0){
-            hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_CLR_OFFSET, 0x1);
-        }
+        if(hal_core_id() == 0) hal_write_to_mailbox(ARCHI_MAILBOX_IRQ_RCV_CLR_OFFSET, 0x1);
         synch_barrier();
-        // extra clear beacuse Ibex drive it at edge level
+ /*
+ * The interrupt clears the EU, but Ibex only clears its pending
+ * interrupt at the next instruction, which re-triggers the EU.
+ * The CL then skips the barrier at the next pos_wait,
+ * whether or not Ibex triggered it.
+ */
         eu_evt_clr(1u << 22);
         synch_barrier();
         cluster_entry_stub();
@@ -89,7 +91,6 @@ void cluster_entry_stub()
 
     synch_barrier();
     int retval = ((int (*)())cluster_entry)();
-    // synch_barrier();
 
     if (hal_core_id() == 0)
     {
